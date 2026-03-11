@@ -15,8 +15,6 @@ import com.example.travelji.ui.theme.TravelJiTheme
 
 class MainActivity : ComponentActivity() {
 
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
