@@ -32,6 +32,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.travelji.R
 
 @Composable
@@ -40,9 +41,9 @@ fun PlaceDetailCard(
 //    description: String="\"The Charminar is a monument and mosque located in Hyderabad, Telangana,",
 //    imagePainter: Painter,
 //    modifier: Modifier = Modifier
+    // rating : String
 ) {
     var isChecked by remember { mutableStateOf(false) }
-
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -58,7 +59,7 @@ fun PlaceDetailCard(
             // Background Image
             Image(
                 painter = painterResource(R.drawable.ic_launcher_background),
-                contentDescription = "Charminar",
+                contentDescription = name,
                 modifier = Modifier.fillMaxSize(),
                 contentScale = ContentScale.Crop
             )
@@ -71,19 +72,45 @@ fun PlaceDetailCard(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.Top
             ) {
-                Surface(
-                    color = Color.Black.copy(alpha = 0.6f),
-                    shape = RoundedCornerShape(8.dp)
-                ) {
-                    Text(
-                        text = name,
-                        color = Color.White,
-                        modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp),
-//                              style = MaterialTheme.typography.titleMedium,
-                        fontWeight = FontWeight.Bold
-                    )
-                }
+                Column {
+                    Surface(
+                        color = Color.Black.copy(alpha = 0.6f),
+                        shape = RoundedCornerShape(8.dp)
+                    ) {
 
+                        Text(
+                            text = "Charminar",
+                            color = Color.White,
+                            modifier = Modifier.padding(
+                                horizontal = 12.dp,
+                                vertical = 6.dp
+                            ),
+//                        style = MaterialTheme.typography.titleMedium,
+                            fontWeight = FontWeight.Bold
+                        )
+
+                    }
+
+                    Surface(
+                        color = Color.Black.copy(alpha = 0.6f),
+                        shape = RoundedCornerShape(8.dp)
+                    ) {
+
+                        Text(
+                            text = "Rating: 4.9",
+                            fontSize = 11.sp,
+                            color = Color.White,
+                            modifier = Modifier.padding(
+                                horizontal = 12.dp,
+                                vertical = 6.dp
+                            ),
+//                        style = MaterialTheme.typography.titleMedium,
+                            fontWeight = FontWeight.Bold
+                        )
+
+                    }
+
+                }
                 Checkbox(
                     checked = isChecked,
                     onCheckedChange = { isChecked = it },
@@ -119,7 +146,7 @@ fun PlaceDetailCard(
                 Text(
                     text = "The Charminar is a monument and mosque located in Hyderabad, Telangana,India. Constructed in 1591, the landmark has become a global icon of Hyderabad.",
                     color = Color.LightGray,
-//                          style = MaterialTheme.typography.bodyMedium,
+//                    style = MaterialTheme.typography.bodyMedium,
                     maxLines = 3,
                     overflow = TextOverflow.Ellipsis
                 )
