@@ -31,7 +31,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.travelji.ui.theme.TravelJiTheme
-import com.example.travelji.view.composables.AppPages
+import com.example.travelji.view.composables.app_pages.FoodListView
+import com.example.travelji.view.composables.app_pages.PlacesListView
 
 class AppActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -92,10 +93,10 @@ fun MiddleView(startDestination: SCREENS, modifier: Modifier) {
         navController = navController
     ) {
         composable (SCREENS.PLACES_SCREEN.screenName) {
-            AppPages.PlacesListView(modifier)
+            PlacesListView(modifier)
         }
         composable (SCREENS.FOOD_SCREEN.screenName) {
-            AppPages.FoodListView(modifier)
+            FoodListView(modifier)
         }
     }
 
