@@ -21,6 +21,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarColors
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -28,37 +29,28 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.travelji.db.RemoteDBHelper
 import com.example.travelji.model.CardItemPojo
 import com.example.travelji.ui.theme.MyColor
 import com.example.travelji.ui.theme.TravelJiTheme
 import com.example.travelji.view.composables.app_pages.FoodListView
 import com.example.travelji.view.composables.app_pages.PlacesListView
-import kotlinx.coroutines.launch
+import com.example.travelji.viewmodel.AppViewModel
 
 class AppActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         var openingPageString = SCREENS.PLACES_SCREEN
+        val appViewModel = AppViewModel()
         setContent {
             TravelJiTheme {
-                var data : List<CardItemPojo> by rememberSaveable { mutableStateOf(emptyList())}
-                var dataFood : List<CardItemPojo> by rememberSaveable { mutableStateOf(emptyList())}
+//                var data : List<CardItemPojo> by rememberSaveable { mutableStateOf(emptyList())}
+//                var dataFood : List<CardItemPojo> by rememberSaveable { mutableStateOf(emptyList())}
 
-                LaunchedEffect(Unit) {
-                    lifecycleScope.launch {
-                        data = RemoteDBHelper.getCityCategory("Hyderabad", "recommendedPlaces")
-                    }
-                    lifecycleScope.launch {
-                        dataFood = RemoteDBHelper.getCityCategory("Hyderabad", "recommendedRestaurants")
-                    }
-                }
-                MainView(openingPageString, data, dataFood)
+                MainView(openingPageString, appViewModel)
             }
         }
     }
@@ -67,9 +59,17 @@ class AppActivity : ComponentActivity() {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainView(openingPageString: SCREENS, data: List<CardItemPojo>, dataFood: List<CardItemPojo>) {
+fun MainView(openingPageString: SCREENS, appViewModel: AppViewModel) {
 
     var pageString by rememberSaveable { mutableStateOf(openingPageString) }
+
+    val data by appViewModel.dataPlaces.collectAsState()
+    val dataFood by appViewModel.dataFoodPlaces.collectAsState()
+
+    LaunchedEffect(Unit) {
+        appViewModel.loadPlaces()
+        appViewModel.loadFoodPlaces()
+    }
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
