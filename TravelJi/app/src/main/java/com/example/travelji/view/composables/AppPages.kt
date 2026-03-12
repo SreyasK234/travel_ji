@@ -39,8 +39,8 @@ import  com.example.travelji.R
 class AppPages {
     companion object{
         @Composable
-        fun PlaceDetailCard(
-//    name: String="Charminar",
+        private fun PlaceDetailCard(
+            name: String,
 //    description: String="\"The Charminar is a monument and mosque located in Hyderabad, Telangana,",
 //    imagePainter: Painter,
 //    modifier: Modifier = Modifier
@@ -80,10 +80,10 @@ class AppPages {
                             shape = RoundedCornerShape(8.dp)
                         ) {
                             Text(
-                                text = "Charminar",
+                                text = name,
                                 color = Color.White,
                                 modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp),
-//                        style = MaterialTheme.typography.titleMedium,
+//                              style = MaterialTheme.typography.titleMedium,
                                 fontWeight = FontWeight.Bold
                             )
                         }
@@ -123,7 +123,7 @@ class AppPages {
                         Text(
                             text = "The Charminar is a monument and mosque located in Hyderabad, Telangana,India. Constructed in 1591, the landmark has become a global icon of Hyderabad.",
                             color = Color.LightGray,
-//                    style = MaterialTheme.typography.bodyMedium,
+//                          style = MaterialTheme.typography.bodyMedium,
                             maxLines = 3,
                             overflow = TextOverflow.Ellipsis
                         )
@@ -133,9 +133,9 @@ class AppPages {
         }
 
         @Composable
-        fun TestList(){
+        fun PlacesListView(modifier: Modifier) {
             LazyColumn(
-                modifier = Modifier.fillMaxSize().padding(16.dp)
+                modifier = modifier.padding(16.dp)
             ) {
                 stickyHeader {
                     Card(modifier = Modifier.padding(8.dp)) {
@@ -143,7 +143,18 @@ class AppPages {
                     }
                 }
                 items(5){
-                    PlaceDetailCard()
+                    PlaceDetailCard("Charminar")
+                }
+            }
+        }
+
+        @Composable
+        fun FoodListView(modifier: Modifier){
+            LazyColumn (
+                modifier = modifier.padding(16.dp)
+            ) {
+                items(10){
+                    PlaceDetailCard("Food Row")
                 }
             }
         }
