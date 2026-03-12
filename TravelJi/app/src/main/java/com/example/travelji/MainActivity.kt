@@ -12,7 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.travelji.ui.theme.TravelJiTheme
-import com.example.travelji.view.composables.LoginPage
+import com.example.travelji.view.composables.login_pages.login_screens.LoginAppNavigation
 
 class MainActivity : ComponentActivity() {
 
@@ -22,7 +22,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             TravelJiTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    LoginPage.LoginAppNavigation()
+                    LoginAppNavigation()
                 }
             }
         }
