@@ -34,10 +34,12 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.travelji.R
+import com.example.travelji.model.CardItemPojo
 
 @Composable
 fun PlaceDetailCard(
     name: String,
+    cardItemPojo: CardItemPojo
 //    description: String="\"The Charminar is a monument and mosque located in Hyderabad, Telangana,",
 //    imagePainter: Painter,
 //    modifier: Modifier = Modifier
@@ -79,7 +81,7 @@ fun PlaceDetailCard(
                     ) {
 
                         Text(
-                            text = "Charminar",
+                            text = cardItemPojo.name,
                             color = Color.White,
                             modifier = Modifier.padding(
                                 horizontal = 12.dp,
@@ -97,7 +99,7 @@ fun PlaceDetailCard(
                     ) {
 
                         Text(
-                            text = "Rating: 4.9",
+                            text = "Rating: ${cardItemPojo.rating}",
                             fontSize = 11.sp,
                             color = Color.White,
                             modifier = Modifier.padding(
@@ -144,7 +146,7 @@ fun PlaceDetailCard(
                     fontWeight = FontWeight.Bold
                 )
                 Text(
-                    text = "The Charminar is a monument and mosque located in Hyderabad, Telangana,India. Constructed in 1591, the landmark has become a global icon of Hyderabad.",
+                    text = cardItemPojo.description,
                     color = Color.LightGray,
 //                    style = MaterialTheme.typography.bodyMedium,
                     maxLines = 3,

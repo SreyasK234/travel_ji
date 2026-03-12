@@ -8,9 +8,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.travelji.model.CardItemPojo
 
 @Composable
-fun PlacesListView(modifier: Modifier) {
+fun PlacesListView(modifier: Modifier, data: List<CardItemPojo>) {
+
+    val cardItems : List<CardItemPojo> = data
+
     LazyColumn(
         modifier = modifier.padding(16.dp)
     ) {
@@ -19,8 +23,8 @@ fun PlacesListView(modifier: Modifier) {
                 Text("Recommended Places", fontSize = 30.sp)
             }
         }
-        items(5){
-            PlaceDetailCard("Charminar")
+        items(cardItems.size){
+            PlaceDetailCard("Charminar", cardItems[it])
         }
     }
 }

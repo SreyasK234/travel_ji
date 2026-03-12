@@ -38,7 +38,8 @@ import androidx.core.splashscreen.SplashScreen
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.travelji.view.composables.SplashScreen.Companion.SplashScreen
+//import com.example.travelji.view.composables.SplashScreen.Companion.SplashScreen
+import com.example.travelji.view.composables.login_pages.login_screens.SplashScreen
 
 
 class LoginPage {
@@ -554,7 +555,7 @@ class LoginPage {
         @Composable
         private fun Preview() {
             MaterialTheme {
-                LoginAppNavigation()
+//                LoginAppNavigation()
             }
         }
 
