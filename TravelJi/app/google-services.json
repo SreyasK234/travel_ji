@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "1019453464457",
+    "firebase_url": "https://travelji-6f87d-default-rtdb.firebaseio.com",
+    "project_id": "travelji-6f87d",
+    "storage_bucket": "travelji-6f87d.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1019453464457:android:671cd56bc7f5c6cb8ecb58",
+        "android_client_info": {
+          "package_name": "com.example.travelji"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyACbm44B-1UACip8THqfUyb4xZvDji8NTg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
