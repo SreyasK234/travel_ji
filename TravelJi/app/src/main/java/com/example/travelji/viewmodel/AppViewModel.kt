@@ -2,7 +2,6 @@ package com.example.travelji.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.travelji.db.RemoteDBHelper
 import com.example.travelji.model.CardItemPojo
 import com.example.travelji.repo.AppRepo
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -31,13 +30,13 @@ class AppViewModel : ViewModel() {
 
     fun loadFoodPlaces(){
         viewModelScope.launch {
-            _dataFoodPlaces.value = RemoteDBHelper.getCityCategory("Hyderabad", "recommendedRestaurants")
+            _dataFoodPlaces.value = appRepo.getFoodPlaces()
         }
     }
 
     fun loadHiddenGems(){
         viewModelScope.launch {
-            _dataHiddenGems.value = RemoteDBHelper.getCityCategory("Hyderabad", "hiddenGems")
+            _dataHiddenGems.value = appRepo.getHiddenGems()
         }
     }
 
