@@ -40,7 +40,7 @@ import com.example.travelji.ui.theme.TravelJiTheme
 
 @Composable
 fun SimpleProfileScreen(
-    name: String = "Anshika",
+    name: String = "User Name",
     onLogout: () -> Unit = {}
 ) {
     // Defining the purple gradient (Dark to Light)
@@ -143,7 +143,7 @@ fun SimpleProfileScreen(
 fun SimpleProfilePreview() {
     TravelJiTheme {
 
-        SimpleProfilePreview()
+//        SimpleProfilePreview()
 
     }
 

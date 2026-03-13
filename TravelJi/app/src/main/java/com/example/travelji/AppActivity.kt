@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Backpack
 import androidx.compose.material.icons.filled.Explore
 import androidx.compose.material.icons.filled.Place
@@ -50,6 +51,7 @@ import com.example.travelji.view.composables.app_pages.FoodListView
 import com.example.travelji.view.composables.app_pages.HiddenGemsListView
 import com.example.travelji.view.composables.app_pages.PlacesListView
 import com.example.travelji.view.composables.mytrip_page.MyTripPage
+import com.example.travelji.view.composables.profile_page.SimpleProfileScreen
 import com.example.travelji.viewmodel.AppViewModel
 
 class AppActivity : ComponentActivity() {
@@ -92,11 +94,19 @@ fun MainView(openingPageString: SCREENS, appViewModel: AppViewModel) {
         topBar = {
             CenterAlignedTopAppBar(
                 title = {
-                    Text(
-                        text = "Travel Ji",
-                        style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.Bold),
-                        color = Color.White
-                    )
+                    Row (
+                        horizontalArrangement = Arrangement.spacedBy(100.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text(
+                            text = "Travel Ji",
+                            style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.Bold),
+                            color = Color.White
+                        )
+                        IconButton(onClick = {pageString = SCREENS.PROFILE_SCREEN}) {
+                            Icon(Icons.Default.AccountCircle, null, tint = Color.Black, modifier = Modifier.size(28.dp))
+                        }
+                    }
                 },
                 colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
                     containerColor = Color(0xFF6A1B9A) // Dark Purple
@@ -172,6 +182,9 @@ fun MiddleView(
         }
         composable(SCREENS.HIDDEN_GEMS.screenName) {
             HiddenGemsListView(modifier, dataHiddenGems)
+        }
+        composable (SCREENS.PROFILE_SCREEN.screenName) {
+            SimpleProfileScreen()
         }
     }
 
