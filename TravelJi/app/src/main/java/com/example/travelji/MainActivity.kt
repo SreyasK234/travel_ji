@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.travelji.ui.theme.TravelJiTheme
+import com.example.travelji.view.composables.login_pages.login_screens.AuthViewModel
 import com.example.travelji.view.composables.login_pages.login_screens.LoginAppNavigation
 
 class MainActivity : ComponentActivity() {
@@ -19,10 +20,12 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        var authViewModel = AuthViewModel()
         setContent {
             TravelJiTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    LoginAppNavigation()
+                    LoginAppNavigation(Modifier.padding(innerPadding),authViewModel)
+
                 }
             }
         }

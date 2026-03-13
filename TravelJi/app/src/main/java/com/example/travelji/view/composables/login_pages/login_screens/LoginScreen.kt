@@ -24,11 +24,15 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 
 @Composable
 fun LoginScreenModern(
     modifier: Modifier = Modifier,
+    navController: NavController,
+    authViewModel: AuthViewModel,
     isLoading: Boolean = false,
     emailInitial: String = "",
     onLoginClick: (email: String, password: String) -> Unit = { _, _ -> },
@@ -76,6 +80,8 @@ fun LoginScreenModern(
 
                 LoginFormModern(
                     isLoading = isLoading,
+                    navController,
+                    authViewModel,
                     emailInitial = emailInitial,
                     onLoginClick = onLoginClick
                 )
@@ -90,7 +96,7 @@ fun LoginScreenModern(
                         color = Color.Gray,
                         style = MaterialTheme.typography.bodySmall
                     )
-                    TextButton(onClick = onNavigateToSignUp) {
+                    TextButton(onClick = { navController.navigate("signup") }) {
                         Text(
                             "Create account",
                             color = PrimaryIndigo,
@@ -101,5 +107,12 @@ fun LoginScreenModern(
                 }
             }
         }
+    }
+}
+@Preview(showBackground = true, widthDp = 390, heightDp = 844)
+@Composable
+fun TravelLoginScreenPreview() {
+    MaterialTheme {
+        //LoginScreenModern()
     }
 }

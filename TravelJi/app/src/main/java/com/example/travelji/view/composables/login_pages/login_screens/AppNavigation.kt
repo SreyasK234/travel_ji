@@ -1,12 +1,14 @@
 package com.example.travelji.view.composables.login_pages.login_screens
 
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.travelji.view.composables.login_pages.home_page.HomeScreen
 
 @Composable
-fun LoginAppNavigation() {
+fun LoginAppNavigation(modifier: Modifier,authViewModel: AuthViewModel){
     val navController = rememberNavController()
     NavHost(navController = navController, startDestination = "splash") {
         composable("splash") {
@@ -18,13 +20,20 @@ fun LoginAppNavigation() {
         }
         composable("login") {
             LoginScreenModern (
-                onNavigateToSignUp = { navController.navigate("signup") }
+                // onNavigateToSignUp = { navController.navigate("signup") }
+                modifier,navController,authViewModel
             )
         }
         composable("signup") {
             SignUpScreenModern(
-                onBack = { navController.popBackStack() }
+                //onBack = { navController.popBackStack() }
+                modifier,navController,authViewModel
             )
+        }
+        composable("home") {
+            HomeScreen()
+
+
         }
     }
 }

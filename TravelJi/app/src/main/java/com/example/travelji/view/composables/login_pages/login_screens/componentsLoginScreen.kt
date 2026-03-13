@@ -1,5 +1,6 @@
 package com.example.travelji.view.composables.login_pages.login_screens
 
+import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -28,14 +29,18 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
@@ -43,6 +48,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 
 
 @Composable
@@ -69,11 +75,31 @@ fun AppTitle() {
 @Composable
 fun LoginFormModern(
     isLoading: Boolean,
+    navController: NavController,
+    authViewModel: AuthViewModel,
     emailInitial: String,
     onLoginClick: (email: String, password: String) -> Unit
 ) {
-    var email by rememberSaveable { mutableStateOf(emailInitial) }
-    var password by rememberSaveable { mutableStateOf("") }
+    var email by remember {
+        mutableStateOf("")
+    }
+    var password by remember {
+        mutableStateOf("")
+    }
+    val authState = authViewModel.authState.observeAsState()
+    val context = LocalContext.current
+    LaunchedEffect(authState.value) {
+        when(authState.value){
+            is AuthState.Authenticated -> navController.navigate("home")
+            is AuthState.Error -> Toast.makeText(context,
+                (authState.value as AuthState.Error).message, Toast.LENGTH_SHORT).show()
+            else -> Unit
+        }
+    }
+
+
+    //var email by rememberSaveable { mutableStateOf(emailInitial) }
+    //var password by rememberSaveable { mutableStateOf("") }
     var emailError by rememberSaveable { mutableStateOf<String?>(null) }
     var passwordError by rememberSaveable { mutableStateOf<String?>(null) }
 
@@ -123,9 +149,13 @@ fun LoginFormModern(
 
     Button(
         onClick = {
+            //
+            navController.navigate("home")
+            authViewModel.login(email,password)
             if (!isLoading && validate()) onLoginClick(email.trim(), password)
         },
-        enabled = !isLoading,
+        enabled = authState.value != AuthState.Loading,
+        //enabled = !isLoading,
         modifier = Modifier
             .fillMaxWidth()
             .height(56.dp)
@@ -143,7 +173,7 @@ fun LoginFormModern(
                 modifier = Modifier.size(24.dp)
             )
         } else {
-            Text("Sign In", fontWeight = FontWeight.Bold, fontSize = 16.sp)
+            Text("Login In", fontWeight = FontWeight.Bold, fontSize = 16.sp)
         }
     }
 }
@@ -151,10 +181,32 @@ fun LoginFormModern(
 @Composable
 fun SignUpFormModern(
     isLoading: Boolean,
+    authViewModel: AuthViewModel,
+    navController: NavController,
     onSignUpClick: (email: String, password: String) -> Unit
 ) {
-    var email by rememberSaveable { mutableStateOf("") }
-    var password by rememberSaveable { mutableStateOf("") }
+    var email by remember {
+        mutableStateOf("")
+    }
+    var password by remember {
+        mutableStateOf("")
+    }
+    val authState = authViewModel.authState.observeAsState()
+    val context = LocalContext.current
+    LaunchedEffect(authState.value) {
+        when (authState.value) {
+            is AuthState.Authenticated -> navController.navigate("home")
+            is AuthState.Error -> Toast.makeText(
+                context,
+                (authState.value as AuthState.Error).message, Toast.LENGTH_SHORT
+            ).show()
+            else -> Unit
+        }
+    }
+
+
+    //var email by rememberSaveable { mutableStateOf("") }
+    //var password by rememberSaveable { mutableStateOf("") }
     var confirmPassword by rememberSaveable { mutableStateOf("") }
     var emailError by rememberSaveable { mutableStateOf<String?>(null) }
     var passwordError by rememberSaveable { mutableStateOf<String?>(null) }
@@ -173,10 +225,10 @@ fun SignUpFormModern(
             password.length <= 10 -> { ok = false; "Must be > 10 characters" }
             else -> null
         }
-        confirmPasswordError = when {
-            confirmPassword != password -> { ok = false; "Passwords do not match" }
-            else -> null
-        }
+//        confirmPasswordError = when {
+//            confirmPassword != password -> { ok = false; "Passwords do not match" }
+//            else -> null
+//        }
         return ok
     }
 
@@ -205,27 +257,31 @@ fun SignUpFormModern(
 
     Spacer(Modifier.height(16.dp))
 
-    PasswordFieldModern(
-        value = confirmPassword,
-        onValueChange = {
-            confirmPassword = it
-            if (confirmPasswordError != null) confirmPasswordError = null
-        },
-        isError = confirmPasswordError != null,
-        errorText = confirmPasswordError,
-        label = "Confirm password",
-        onDone = {
-            if (!isLoading && validate()) onSignUpClick(email.trim(), password)
-        }
-    )
+//    PasswordFieldModern(
+//        value = confirmPassword,
+//        onValueChange = {
+//            confirmPassword = it
+//            if (confirmPasswordError != null) confirmPasswordError = null
+//        },
+//        isError = confirmPasswordError != null,
+//        errorText = confirmPasswordError,
+//        label = "Confirm password",
+//        onDone = {
+//            if (!isLoading && validate()) onSignUpClick(email.trim(), password)
+//        }
+//    )
 
     Spacer(Modifier.height(32.dp))
 
     Button(
         onClick = {
+            //
+
+            authViewModel.signup(email, password)
             if (!isLoading && validate()) onSignUpClick(email.trim(), password)
         },
-        enabled = !isLoading,
+        enabled = authState.value != AuthState.Loading,
+
         modifier = Modifier
             .fillMaxWidth()
             .height(56.dp)

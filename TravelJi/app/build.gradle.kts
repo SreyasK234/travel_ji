@@ -61,14 +61,14 @@ dependencies {
     implementation("io.coil-kt:coil-compose:2.7.0")
     implementation("io.coil-kt.coil3:coil-network-okhttp:3.0.4")
     implementation("com.github.bumptech.glide:compose:1.0.0-beta01")
-
-
+    implementation("androidx.compose.runtime:runtime-livedata:1.7.6") // Use your project's compose version
+    implementation("androidx.compose.runtime:runtime-livedata")
 
 //=======
     implementation("androidx.compose.material:material-icons-extended")
     implementation("androidx.navigation:navigation-compose:2.8.5")
 //>>>>>>> Stashed changes
-
+    implementation("com.google.firebase:firebase-auth")
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -80,6 +80,7 @@ dependencies {
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.core.splashscreen)
+    implementation(libs.androidx.compose.runtime.livedata)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
