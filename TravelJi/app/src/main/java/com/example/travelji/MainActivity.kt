@@ -1,5 +1,6 @@
 package com.example.travelji
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -21,10 +22,15 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         var authViewModel = AuthViewModel()
+        val navFun = {
+            val intent = Intent(this@MainActivity, AppActivity::class.java)
+            startActivity(intent)
+        }
         setContent {
             TravelJiTheme {
+
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    LoginAppNavigation(Modifier.padding(innerPadding),authViewModel)
+                    LoginAppNavigation(Modifier.padding(innerPadding),authViewModel, navFun )
 
                 }
             }
