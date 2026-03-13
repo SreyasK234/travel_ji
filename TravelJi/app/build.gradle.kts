@@ -43,19 +43,18 @@ android {
 }
 
 dependencies {
-//<<<<<<< Updated upstream
+
     implementation(platform("com.google.firebase:firebase-bom:34.10.0"))
     implementation("com.google.firebase:firebase-analytics")
     implementation("com.google.firebase:firebase-database")
 
     implementation("androidx.compose.material:material-icons-extended")
     implementation("androidx.navigation:navigation-compose:2.8.5")
-//=======
-//<<<<<<< Updated upstream
+
     implementation(platform("com.google.firebase:firebase-bom:34.10.0"))
     implementation("com.google.firebase:firebase-analytics")
     implementation("com.google.firebase:firebase-database")
-//=======
+
     implementation("androidx.compose.material:material-icons-extended")
     implementation("androidx.navigation:navigation-compose:2.8.5")
     implementation("io.coil-kt:coil-compose:2.7.0")
@@ -64,10 +63,10 @@ dependencies {
     implementation("androidx.compose.runtime:runtime-livedata:1.7.6") // Use your project's compose version
     implementation("androidx.compose.runtime:runtime-livedata")
 
-//=======
+
     implementation("androidx.compose.material:material-icons-extended")
     implementation("androidx.navigation:navigation-compose:2.8.5")
-//>>>>>>> Stashed changes
+
     implementation("com.google.firebase:firebase-auth")
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
