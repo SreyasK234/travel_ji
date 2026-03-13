@@ -19,6 +19,7 @@ class AppViewModel : ViewModel() {
     private val _dataFoodPlaces = MutableStateFlow<List<CardItemPojo>>(emptyList())
     val dataFoodPlaces : StateFlow<List<CardItemPojo>> = _dataFoodPlaces
 
+//    val selectedPlaces = MutableStateFlow<List<CardItemPojo>>()
     fun loadPlaces() {
         viewModelScope.launch {
             _dataPlaces.value = appRepo.getPlaces()

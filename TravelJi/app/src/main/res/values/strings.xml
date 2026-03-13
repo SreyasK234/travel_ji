@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">TravelJi</string>
     <string name="title_activity_app">AppActivity</string>
+    <string name="title_activity_temp">TempActivity</string>
 </resources>

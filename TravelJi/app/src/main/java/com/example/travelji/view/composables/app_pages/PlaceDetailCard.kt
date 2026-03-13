@@ -22,6 +22,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -42,7 +43,7 @@ fun PlaceDetailCard(
     name: String,
     cardItemPojo: CardItemPojo
 ) {
-    var isChecked by remember { mutableStateOf(false) }
+    var isChecked by rememberSaveable { mutableStateOf(false) }
 
     val url = cardItemPojo.imageUrl
     Log.d("CARD", url)
@@ -61,10 +62,7 @@ fun PlaceDetailCard(
         ) {
             // Background Image
             AsyncImage(
-                model = ImageRequest.Builder(LocalContext.current)
-                    .data(url)
-                    .crossfade(true)
-                    .build(),
+                model = url,
                 contentDescription = name,
                 modifier = Modifier.fillMaxSize(),
                 contentScale = ContentScale.Crop

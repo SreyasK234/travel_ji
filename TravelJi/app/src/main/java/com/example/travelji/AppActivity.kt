@@ -52,6 +52,7 @@ import com.example.travelji.ui.theme.MyColor
 import com.example.travelji.ui.theme.TravelJiTheme
 import com.example.travelji.view.composables.app_pages.FoodListView
 import com.example.travelji.view.composables.app_pages.PlacesListView
+import com.example.travelji.view.composables.mytrip_page.MyTripPage
 import com.example.travelji.viewmodel.AppViewModel
 
 class AppActivity : ComponentActivity() {
@@ -130,7 +131,7 @@ fun MainView(openingPageString: SCREENS, appViewModel: AppViewModel) {
                         IconButton(onClick = {pageString = SCREENS.FOOD_SCREEN}) {
                             Icon(Icons.Default.Restaurant, null, tint = Color.Black, modifier = Modifier.size(28.dp))
                         }
-                        IconButton(onClick = {pageString = SCREENS.FOOD_SCREEN}) {
+                        IconButton(onClick = {pageString = SCREENS.MY_TRIP}) {
                             Icon(Icons.Default.Explore, null, tint = Color.Black, modifier = Modifier.size(28.dp))
                         }
                         IconButton(onClick = {pageString = SCREENS.FOOD_SCREEN}) {
@@ -159,6 +160,12 @@ fun MiddleView(startDestination: SCREENS, modifier: Modifier, data: List<CardIte
         }
         composable (SCREENS.FOOD_SCREEN.screenName) {
             FoodListView(modifier, dataFood)
+        }
+        composable (SCREENS.MY_TRIP.screenName) {
+            MyTripPage()
+        }
+        composable(SCREENS.HIDDEN_GEMS.screenName) {
+
         }
     }
 
