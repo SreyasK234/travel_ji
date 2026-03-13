@@ -20,8 +20,6 @@ class AppViewModel : ViewModel() {
     private val _dataHiddenGems = MutableStateFlow<List<CardItemPojo>>(emptyList())
     val dataHiddenGems : StateFlow<List<CardItemPojo>> = _dataHiddenGems
 
-
-//    val selectedPlaces = MutableStateFlow<List<CardItemPojo>>()
     fun loadPlaces() {
         viewModelScope.launch {
             _dataPlaces.value = appRepo.getPlaces()
