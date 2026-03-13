@@ -4,21 +4,33 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Backpack
+import androidx.compose.material.icons.filled.Explore
 import androidx.compose.material.icons.filled.LocationOn
+import androidx.compose.material.icons.filled.Place
+import androidx.compose.material.icons.filled.Restaurant
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBarColors
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -26,9 +38,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -75,23 +90,53 @@ fun MainView(openingPageString: SCREENS, appViewModel: AppViewModel) {
         modifier = Modifier.fillMaxSize(),
         topBar = {
             CenterAlignedTopAppBar(
-                title = {Text("Travel Ji")},
-                colors = TopAppBarColors(
-                    containerColor = Color.Cyan,
-                    scrolledContainerColor = Color.Cyan,
-                    navigationIconContentColor = Color.Black,
-                    titleContentColor = Color.Black,
-                    actionIconContentColor = Color.Black
+                title = {
+                    Text(
+                        text = "Travel Ji",
+                        style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.Bold),
+                        color = Color.White
+                    )
+                },
+                colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
+                    containerColor = Color(0xFF6A1B9A) // Dark Purple
                 )
             )
         },
         bottomBar = {
-            BottomAppBar (
-                containerColor = MyColor
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 24.dp),
+                contentAlignment = Alignment.BottomCenter
             ) {
-                Row  (horizontalArrangement = Arrangement.SpaceEvenly) {
-                    IconButton(onClick = {pageString = SCREENS.PLACES_SCREEN}) { Icon(imageVector = Icons.Default.LocationOn, contentDescription = "")  }
-                    IconButton(onClick = {pageString = SCREENS.FOOD_SCREEN}) { Icon(imageVector = Icons.Default.Search, contentDescription = "")  }
+                // Glassmorphism Floating Bottom Bar
+                Surface(
+                    modifier = Modifier
+                        .fillMaxWidth(0.92f)
+                        .height(72.dp),
+                    shape = RoundedCornerShape(36.dp),
+                    color = Color.Black.copy(alpha = 0.15f), // Glassy background
+                    border = BorderStroke(1.dp, Color.Black.copy(alpha = 0.3f)),
+                    tonalElevation = 0.dp
+                ) {
+                    Row(
+                        modifier = Modifier.fillMaxSize(),
+                        horizontalArrangement = Arrangement.SpaceEvenly,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        IconButton(onClick = {pageString = SCREENS.PLACES_SCREEN}) {
+                            Icon(Icons.Default.Place, null, tint = Color.Black, modifier = Modifier.size(28.dp))
+                        }
+                        IconButton(onClick = {pageString = SCREENS.FOOD_SCREEN}) {
+                            Icon(Icons.Default.Restaurant, null, tint = Color.Black, modifier = Modifier.size(28.dp))
+                        }
+                        IconButton(onClick = {pageString = SCREENS.FOOD_SCREEN}) {
+                            Icon(Icons.Default.Explore, null, tint = Color.Black, modifier = Modifier.size(28.dp))
+                        }
+                        IconButton(onClick = {pageString = SCREENS.FOOD_SCREEN}) {
+                            Icon(Icons.Default.Backpack, null, tint = Color.Black, modifier = Modifier.size(28.dp))
+                        }
+                    }
                 }
             }
         }
