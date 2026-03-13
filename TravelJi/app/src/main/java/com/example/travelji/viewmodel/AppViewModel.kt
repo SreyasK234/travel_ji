@@ -18,6 +18,9 @@ class AppViewModel : ViewModel() {
 
     private val _dataFoodPlaces = MutableStateFlow<List<CardItemPojo>>(emptyList())
     val dataFoodPlaces : StateFlow<List<CardItemPojo>> = _dataFoodPlaces
+    private val _dataHiddenGems = MutableStateFlow<List<CardItemPojo>>(emptyList())
+    val dataHiddenGems : StateFlow<List<CardItemPojo>> = _dataHiddenGems
+
 
 //    val selectedPlaces = MutableStateFlow<List<CardItemPojo>>()
     fun loadPlaces() {
@@ -29,6 +32,12 @@ class AppViewModel : ViewModel() {
     fun loadFoodPlaces(){
         viewModelScope.launch {
             _dataFoodPlaces.value = RemoteDBHelper.getCityCategory("Hyderabad", "recommendedRestaurants")
+        }
+    }
+
+    fun loadHiddenGems(){
+        viewModelScope.launch {
+            _dataHiddenGems.value = RemoteDBHelper.getCityCategory("Hyderabad", "hiddenGems")
         }
     }
 

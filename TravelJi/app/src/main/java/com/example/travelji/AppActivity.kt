@@ -17,11 +17,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Backpack
 import androidx.compose.material.icons.filled.Explore
-import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material.icons.filled.Place
 import androidx.compose.material.icons.filled.Restaurant
-import androidx.compose.material.icons.filled.Search
-import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -48,9 +45,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.travelji.model.CardItemPojo
-import com.example.travelji.ui.theme.MyColor
 import com.example.travelji.ui.theme.TravelJiTheme
 import com.example.travelji.view.composables.app_pages.FoodListView
+import com.example.travelji.view.composables.app_pages.HiddenGemsListView
 import com.example.travelji.view.composables.app_pages.PlacesListView
 import com.example.travelji.view.composables.mytrip_page.MyTripPage
 import com.example.travelji.viewmodel.AppViewModel
@@ -81,10 +78,13 @@ fun MainView(openingPageString: SCREENS, appViewModel: AppViewModel) {
 
     val data by appViewModel.dataPlaces.collectAsState()
     val dataFood by appViewModel.dataFoodPlaces.collectAsState()
+    val dataHiddenGems by appViewModel.dataHiddenGems.collectAsState()
+
 
     LaunchedEffect(Unit) {
         appViewModel.loadPlaces()
         appViewModel.loadFoodPlaces()
+        appViewModel.loadHiddenGems()
     }
 
     Scaffold(
@@ -134,7 +134,7 @@ fun MainView(openingPageString: SCREENS, appViewModel: AppViewModel) {
                         IconButton(onClick = {pageString = SCREENS.MY_TRIP}) {
                             Icon(Icons.Default.Explore, null, tint = Color.Black, modifier = Modifier.size(28.dp))
                         }
-                        IconButton(onClick = {pageString = SCREENS.FOOD_SCREEN}) {
+                        IconButton(onClick = {pageString = SCREENS.HIDDEN_GEMS}) {
                             Icon(Icons.Default.Backpack, null, tint = Color.Black, modifier = Modifier.size(28.dp))
                         }
                     }
@@ -142,12 +142,18 @@ fun MainView(openingPageString: SCREENS, appViewModel: AppViewModel) {
             }
         }
     ) { innerPadding ->
-        MiddleView(startDestination = pageString,modifier = Modifier.padding(innerPadding), data, dataFood)
+        MiddleView(startDestination = pageString,modifier = Modifier.padding(innerPadding), data, dataFood, dataHiddenGems)
     }
 }
 
 @Composable
-fun MiddleView(startDestination: SCREENS, modifier: Modifier, data: List<CardItemPojo>, dataFood: List<CardItemPojo>) {
+fun MiddleView(
+    startDestination: SCREENS,
+    modifier: Modifier,
+    data: List<CardItemPojo>,
+    dataFood: List<CardItemPojo>,
+    dataHiddenGems: List<CardItemPojo>
+) {
 
     val navController = rememberNavController()
 
@@ -162,10 +168,10 @@ fun MiddleView(startDestination: SCREENS, modifier: Modifier, data: List<CardIte
             FoodListView(modifier, dataFood)
         }
         composable (SCREENS.MY_TRIP.screenName) {
-            MyTripPage()
+//            MyTripPage(selectedPlaces = data, )
         }
         composable(SCREENS.HIDDEN_GEMS.screenName) {
-
+            HiddenGemsListView(modifier, dataHiddenGems)
         }
     }
 
