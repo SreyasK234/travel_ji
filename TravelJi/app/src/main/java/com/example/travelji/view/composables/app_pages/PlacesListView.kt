@@ -1,5 +1,6 @@
 package com.example.travelji.view.composables.app_pages
 
+import android.util.Log
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Card
@@ -15,6 +16,8 @@ fun PlacesListView(modifier: Modifier, data: List<CardItemPojo>) {
 
     val cardItems : List<CardItemPojo> = data
 
+    Log.d("ListView", cardItems.toString())
+
     LazyColumn(
         modifier = modifier.padding(16.dp)
     ) {
@@ -24,7 +27,7 @@ fun PlacesListView(modifier: Modifier, data: List<CardItemPojo>) {
             }
         }
         items(cardItems.size){
-            PlaceDetailCard("Charminar", cardItems[it])
+            PlaceDetailCard(cardItems[it].name, cardItems[it])
         }
     }
 }

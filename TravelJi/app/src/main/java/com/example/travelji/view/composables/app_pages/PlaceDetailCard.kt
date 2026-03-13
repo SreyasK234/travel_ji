@@ -1,6 +1,6 @@
 package com.example.travelji.view.composables.app_pages
 
-import androidx.compose.foundation.Image
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -28,24 +28,23 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.travelji.R
 import com.example.travelji.model.CardItemPojo
+import coil.compose.AsyncImage
 
 @Composable
 fun PlaceDetailCard(
     name: String,
     cardItemPojo: CardItemPojo
-//    description: String="\"The Charminar is a monument and mosque located in Hyderabad, Telangana,",
-//    imagePainter: Painter,
-//    modifier: Modifier = Modifier
-    // rating : String
 ) {
     var isChecked by remember { mutableStateOf(false) }
+
+    val url = cardItemPojo.imageUrl
+    Log.d("CARD", url)
+
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -59,8 +58,8 @@ fun PlaceDetailCard(
                 .height(240.dp)
         ) {
             // Background Image
-            Image(
-                painter = painterResource(R.drawable.ic_launcher_background),
+            AsyncImage(
+                model = url,
                 contentDescription = name,
                 modifier = Modifier.fillMaxSize(),
                 contentScale = ContentScale.Crop
