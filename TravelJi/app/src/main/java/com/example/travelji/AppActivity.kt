@@ -168,7 +168,7 @@ fun MiddleView(
             FoodListView(modifier, dataFood)
         }
         composable (SCREENS.MY_TRIP.screenName) {
-//            MyTripPage(selectedPlaces = data, )
+            MyTripPage()
         }
         composable(SCREENS.HIDDEN_GEMS.screenName) {
             HiddenGemsListView(modifier, dataHiddenGems)
