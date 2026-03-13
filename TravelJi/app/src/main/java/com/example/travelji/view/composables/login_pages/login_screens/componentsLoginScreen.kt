@@ -150,7 +150,7 @@ fun LoginFormModern(
     Button(
         onClick = {
             //
-            navController.navigate("home")
+
             authViewModel.login(email,password)
             if (!isLoading && validate()) onLoginClick(email.trim(), password)
         },

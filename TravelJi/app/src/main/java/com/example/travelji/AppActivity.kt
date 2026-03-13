@@ -42,6 +42,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -60,12 +61,14 @@ class AppActivity : ComponentActivity() {
         enableEdgeToEdge()
         var openingPageString = SCREENS.PLACES_SCREEN
         val appViewModel = AppViewModel()
+        //val authViewMode = AuthViewModel()
         setContent {
+            val navController = rememberNavController()
             TravelJiTheme {
 //                var data : List<CardItemPojo> by rememberSaveable { mutableStateOf(emptyList())}
 //                var dataFood : List<CardItemPojo> by rememberSaveable { mutableStateOf(emptyList())}
 
-                MainView(openingPageString, appViewModel)
+                MainView(openingPageString, appViewModel, navController)
             }
         }
     }
@@ -74,7 +77,7 @@ class AppActivity : ComponentActivity() {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainView(openingPageString: SCREENS, appViewModel: AppViewModel) {
+fun MainView(openingPageString: SCREENS, appViewModel: AppViewModel, navController: NavController) {
 
     var pageString by rememberSaveable { mutableStateOf(openingPageString) }
 
@@ -153,7 +156,7 @@ fun MainView(openingPageString: SCREENS, appViewModel: AppViewModel) {
             }
         }
     ) { innerPadding ->
-        MiddleView(startDestination = pageString,modifier = Modifier.padding(innerPadding), data, dataFood, dataHiddenGems)
+        MiddleView(startDestination = pageString,modifier = Modifier.padding(innerPadding), data, dataFood, dataHiddenGems, navController)
     }
 }
 
@@ -163,7 +166,8 @@ fun MiddleView(
     modifier: Modifier,
     data: List<CardItemPojo>,
     dataFood: List<CardItemPojo>,
-    dataHiddenGems: List<CardItemPojo>
+    dataHiddenGems: List<CardItemPojo>,
+    navController1: NavController
 ) {
 
     val navController = rememberNavController()
@@ -185,7 +189,7 @@ fun MiddleView(
             HiddenGemsListView(modifier, dataHiddenGems)
         }
         composable (SCREENS.PROFILE_SCREEN.screenName) {
-            SimpleProfileScreen()
+            SimpleProfileScreen("",navController)
         }
     }
 

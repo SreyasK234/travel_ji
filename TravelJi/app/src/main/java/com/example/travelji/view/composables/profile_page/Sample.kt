@@ -18,6 +18,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
@@ -35,12 +36,15 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.travelji.ui.theme.TravelJiTheme
+import com.example.travelji.view.composables.login_pages.login_screens.AuthViewModel
 
 
 @Composable
 fun SimpleProfileScreen(
     name: String = "User Name",
+    navController: NavController,
     onLogout: () -> Unit = {}
 ) {
     // Defining the purple gradient (Dark to Light)
@@ -123,12 +127,14 @@ fun SimpleProfileScreen(
                     tint = Color(0xFF4A148C) // Matching purple theme
                 )
                 Spacer(Modifier.width(8.dp))
-                Text(
-                    text = "Logout",
-                    fontSize = 18.sp,
-                    color = Color(0xFF4A148C), // Matching purple theme
-                    fontWeight = FontWeight.Medium
-                )
+                Button ( onClick = {
+                        navController.navigate("login")
+                        //authViewModel.signout()
+                }){
+                    Text("Log Out")
+                }
+
+
             }
 
             // Pushes the group back up so it remains centered as a whole
@@ -143,7 +149,7 @@ fun SimpleProfileScreen(
 fun SimpleProfilePreview() {
     TravelJiTheme {
 
-//        SimpleProfilePreview()
+       SimpleProfilePreview()
 
     }
 
