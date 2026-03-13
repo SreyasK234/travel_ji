@@ -95,8 +95,9 @@ fun MainView(openingPageString: SCREENS, appViewModel: AppViewModel) {
             CenterAlignedTopAppBar(
                 title = {
                     Row (
-                        horizontalArrangement = Arrangement.spacedBy(100.dp),
-                        verticalAlignment = Alignment.CenterVertically
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = Modifier.fillMaxWidth()
                     ) {
                         Text(
                             text = "Travel Ji",
