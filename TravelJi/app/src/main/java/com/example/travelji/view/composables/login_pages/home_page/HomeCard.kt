@@ -26,13 +26,13 @@ import androidx.compose.ui.unit.dp
 import com.example.travelji.model.HomeCardItem
 
 @Composable
-fun HomeCard(item: HomeCardItem, navFun: () -> Unit) {
+fun HomeCard(item: HomeCardItem, selectedCity: String, navFun: (String, String) -> Unit) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .aspectRatio(1f)
             .clickable {
-                navFun()
+                navFun(item.title,selectedCity)
             },
 //        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
         colors = CardDefaults.cardColors(

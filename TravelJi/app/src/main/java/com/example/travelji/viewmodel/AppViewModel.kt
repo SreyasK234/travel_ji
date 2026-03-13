@@ -20,21 +20,21 @@ class AppViewModel : ViewModel() {
     private val _dataHiddenGems = MutableStateFlow<List<CardItemPojo>>(emptyList())
     val dataHiddenGems : StateFlow<List<CardItemPojo>> = _dataHiddenGems
 
-    fun loadPlaces() {
+    fun loadPlaces(cityName: String) {
         viewModelScope.launch {
-            _dataPlaces.value = appRepo.getPlaces()
+            _dataPlaces.value = appRepo.getPlaces(cityName)
         }
     }
 
-    fun loadFoodPlaces(){
+    fun loadFoodPlaces(cityName: String) {
         viewModelScope.launch {
-            _dataFoodPlaces.value = appRepo.getFoodPlaces()
+            _dataFoodPlaces.value = appRepo.getFoodPlaces(cityName)
         }
     }
 
-    fun loadHiddenGems(){
+    fun loadHiddenGems(cityName: String) {
         viewModelScope.launch {
-            _dataHiddenGems.value = appRepo.getHiddenGems()
+            _dataHiddenGems.value = appRepo.getHiddenGems(cityName)
         }
     }
 

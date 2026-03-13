@@ -46,11 +46,11 @@ import com.example.travelji.model.HomeCardItem
 import com.example.travelji.ui.theme.TravelJiTheme
 
 @Composable
-fun HomeScreen(navFun: () -> Unit) {
+fun HomeScreen(navFun: (String, String) -> Unit) {
 
     var expanded by rememberSaveable { mutableStateOf(false) }
-    var selectedCity by rememberSaveable { mutableStateOf("Hyderabad") }
-    val cities = listOf("Bengaluru", "Hyderabad", "Mumbai")
+    var selectedCity by rememberSaveable { mutableStateOf("Mumbai") }
+    val cities = listOf("Bangalore", "Hyderabad", "Mumbai")
 
     val homeCardItems = listOf(
         HomeCardItem("Recommended Places", Icons.Default.Place),
@@ -160,7 +160,7 @@ fun HomeScreen(navFun: () -> Unit) {
                 modifier = Modifier.fillMaxWidth()
             ) {
                 items(homeCardItems) { item ->
-                    HomeCard(item, navFun)
+                    HomeCard(item, selectedCity,navFun)
                 }
 
             }

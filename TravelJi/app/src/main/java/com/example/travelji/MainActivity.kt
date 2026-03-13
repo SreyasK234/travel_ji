@@ -22,8 +22,10 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         var authViewModel = AuthViewModel()
-        val navFun = {
+        val navFun : (String, String) -> Unit = {openingString, cityName ->
             val intent = Intent(this@MainActivity, AppActivity::class.java)
+            intent.putExtra("openingString", openingString)
+            intent.putExtra("cityName", cityName)
             startActivity(intent)
         }
         setContent {

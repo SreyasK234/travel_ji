@@ -1,6 +1,7 @@
 package com.example.travelji
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -59,7 +60,25 @@ class AppActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+
+        val openingPage = intent.getStringExtra("openingString")
+        Log.d("App Activity", openingPage?:" Nothing ")
+        val cityName = intent.getStringExtra("cityName") ?: "Mumbai"
+
         var openingPageString = SCREENS.PLACES_SCREEN
+
+        if(openingPage.equals("Recommended Places")){
+            openingPageString = SCREENS.PLACES_SCREEN
+        }else if(openingPage.equals("Recommended Restaurants")){
+            openingPageString = SCREENS.FOOD_SCREEN
+        }else if(openingPage.equals("Hidden Gems")){
+            openingPageString = SCREENS.HIDDEN_GEMS
+        }else if(openingPage.equals("My Trip")){
+            openingPageString = SCREENS.MY_TRIP
+        }else if(openingPage.equals("Profile")){
+            openingPageString = SCREENS.PROFILE_SCREEN
+        }
+
         val appViewModel = AppViewModel()
         //val authViewMode = AuthViewModel()
         setContent {
@@ -68,7 +87,7 @@ class AppActivity : ComponentActivity() {
 //                var data : List<CardItemPojo> by rememberSaveable { mutableStateOf(emptyList())}
 //                var dataFood : List<CardItemPojo> by rememberSaveable { mutableStateOf(emptyList())}
 
-                MainView(openingPageString, appViewModel, navController)
+                MainView(openingPageString, appViewModel, navController, cityName)
             }
         }
     }
@@ -77,7 +96,12 @@ class AppActivity : ComponentActivity() {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainView(openingPageString: SCREENS, appViewModel: AppViewModel, navController: NavController) {
+fun MainView(
+    openingPageString: SCREENS,
+    appViewModel: AppViewModel,
+    navController: NavController,
+    cityName: String
+) {
 
     var pageString by rememberSaveable { mutableStateOf(openingPageString) }
 
@@ -87,9 +111,9 @@ fun MainView(openingPageString: SCREENS, appViewModel: AppViewModel, navControll
 
 
     LaunchedEffect(Unit) {
-        appViewModel.loadPlaces()
-        appViewModel.loadFoodPlaces()
-        appViewModel.loadHiddenGems()
+        appViewModel.loadPlaces(cityName)
+        appViewModel.loadFoodPlaces(cityName)
+        appViewModel.loadHiddenGems(cityName)
     }
 
     Scaffold(

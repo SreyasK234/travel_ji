@@ -5,16 +5,16 @@ import com.example.travelji.model.CardItemPojo
 
 class AppRepo {
 
-    suspend fun getPlaces() : List<CardItemPojo>{
-        val list = RemoteDBHelper.getCityCategory("Hyderabad", "recommendedPlaces")
+    suspend fun getPlaces(cityName: String): List<CardItemPojo>{
+        val list = RemoteDBHelper.getCityCategory(cityName, "recommendedPlaces")
         return list
     }
-    suspend fun getFoodPlaces() : List<CardItemPojo>{
-        val list = RemoteDBHelper.getCityCategory("Hyderabad", "recommendedRestaurants")
+    suspend fun getFoodPlaces(cityName: String): List<CardItemPojo>{
+        val list = RemoteDBHelper.getCityCategory(cityName, "recommendedRestaurants")
         return list
     }
-    suspend fun getHiddenGems() : List<CardItemPojo>{
-        val list = RemoteDBHelper.getCityCategory("Hyderabad", "hiddenGems")
+    suspend fun getHiddenGems(cityName: String): List<CardItemPojo>{
+        val list = RemoteDBHelper.getCityCategory(cityName, "hiddenGems")
         return list
     }
 
