@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -22,9 +23,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.travelji.model.CardItemPojo
+import com.example.travelji.viewmodel.AppViewModel
 
 @Composable
-fun PlacesListView(modifier: Modifier, data: List<CardItemPojo>) {
+fun PlacesListView(modifier: Modifier, data: List<CardItemPojo>, appViewModel: AppViewModel) {
     val lighterPurpleGradient = Brush.verticalGradient(
         colors = listOf(
             Color(0xFF9C27B0), // Lighter Dark Purple
@@ -33,9 +35,7 @@ fun PlacesListView(modifier: Modifier, data: List<CardItemPojo>) {
         )
     )
 
-    val cardItems : List<CardItemPojo> = data
-
-    Log.d("ListView", cardItems.toString())
+    Log.d("ListView", data.toString())
 
     Box (
         modifier = Modifier
@@ -68,7 +68,7 @@ fun PlacesListView(modifier: Modifier, data: List<CardItemPojo>) {
                     )
                 }
             }
-            if(cardItems.isEmpty()){
+            if(data.isEmpty()){
                 item {
                     Box(
                         modifier = Modifier.fillMaxSize(),
@@ -78,8 +78,9 @@ fun PlacesListView(modifier: Modifier, data: List<CardItemPojo>) {
                     }
                 }
             }else{
-                items(cardItems.size) {
-                    PlaceDetailCard(cardItems[it].name, cardItems[it])
+                items(data) {item ->
+                    val isChecked = appViewModel.selectedPlaces.contains(item)
+                    PlaceDetailCard(item, isChecked, onCheckedChange = {appViewModel.togglePlace(item,it)})
                 }
             }
         }

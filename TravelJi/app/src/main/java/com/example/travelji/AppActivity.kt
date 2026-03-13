@@ -52,7 +52,7 @@ import com.example.travelji.ui.theme.TravelJiTheme
 import com.example.travelji.view.composables.app_pages.FoodListView
 import com.example.travelji.view.composables.app_pages.HiddenGemsListView
 import com.example.travelji.view.composables.app_pages.PlacesListView
-import com.example.travelji.view.composables.mytrip_page.MyTripPage
+import com.example.travelji.view.composables.mytrip_page.SelectedItemsScreen
 import com.example.travelji.view.composables.profile_page.SimpleProfileScreen
 import com.example.travelji.viewmodel.AppViewModel
 
@@ -180,7 +180,7 @@ fun MainView(
             }
         }
     ) { innerPadding ->
-        MiddleView(startDestination = pageString,modifier = Modifier.padding(innerPadding), data, dataFood, dataHiddenGems, navController)
+        MiddleView(startDestination = pageString,modifier = Modifier.padding(innerPadding), data, dataFood, dataHiddenGems, navController, appViewModel)
     }
 }
 
@@ -191,7 +191,8 @@ fun MiddleView(
     data: List<CardItemPojo>,
     dataFood: List<CardItemPojo>,
     dataHiddenGems: List<CardItemPojo>,
-    navController1: NavController
+    navController1: NavController,
+    appViewModel: AppViewModel
 ) {
 
     val navController = rememberNavController()
@@ -201,16 +202,16 @@ fun MiddleView(
         navController = navController
     ) {
         composable (SCREENS.PLACES_SCREEN.screenName) {
-            PlacesListView(modifier, data)
+            PlacesListView(modifier, data, appViewModel)
         }
         composable (SCREENS.FOOD_SCREEN.screenName) {
-            FoodListView(modifier, dataFood)
+            FoodListView(modifier, dataFood, appViewModel)
         }
         composable (SCREENS.MY_TRIP.screenName) {
-            MyTripPage()
+            SelectedItemsScreen(modifier,appViewModel)
         }
         composable(SCREENS.HIDDEN_GEMS.screenName) {
-            HiddenGemsListView(modifier, dataHiddenGems)
+            HiddenGemsListView(modifier, dataHiddenGems, appViewModel)
         }
         composable (SCREENS.PROFILE_SCREEN.screenName) {
             SimpleProfileScreen("",navController)

@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -22,12 +23,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.travelji.model.CardItemPojo
+import com.example.travelji.viewmodel.AppViewModel
 
 @Composable
-fun HiddenGemsListView(modifier: Modifier, dataHiddenGems: List<CardItemPojo>){
+fun HiddenGemsListView(modifier: Modifier, dataHiddenGems: List<CardItemPojo>, appViewModel: AppViewModel){
 
-    val hiddenGems = dataHiddenGems
-    Log.d("Food List", hiddenGems.toString())
     val lighterPurpleGradient = Brush.verticalGradient(
         colors = listOf(
             Color(0xFF9C27B0), // Lighter Dark Purple
@@ -68,7 +68,7 @@ fun HiddenGemsListView(modifier: Modifier, dataHiddenGems: List<CardItemPojo>){
                     )
                 }
             }
-            if(hiddenGems.isEmpty()){
+            if(dataHiddenGems.isEmpty()){
                 item {
                     Box(
                         modifier = Modifier.fillMaxSize(),
@@ -78,8 +78,12 @@ fun HiddenGemsListView(modifier: Modifier, dataHiddenGems: List<CardItemPojo>){
                     }
                 }
             }else{
-                items(hiddenGems.size) {
-                    PlaceDetailCard("Food Row", hiddenGems[it])
+                items(dataHiddenGems) {item ->
+                    val isChecked = appViewModel.selectedHiddenGems.contains(item)
+                    PlaceDetailCard(
+                        item, onCheckedChange = { appViewModel.toggleHiddenGem(item, it) },
+                        isChecked = isChecked
+                    )
                 }
             }
         }

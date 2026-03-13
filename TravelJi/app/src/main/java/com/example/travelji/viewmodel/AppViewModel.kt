@@ -1,5 +1,6 @@
 package com.example.travelji.viewmodel
 
+import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.travelji.model.CardItemPojo
@@ -36,6 +37,25 @@ class AppViewModel : ViewModel() {
         viewModelScope.launch {
             _dataHiddenGems.value = appRepo.getHiddenGems(cityName)
         }
+    }
+
+    val selectedRestaurants = mutableStateListOf<CardItemPojo>()
+    val selectedPlaces = mutableStateListOf<CardItemPojo>()
+    val selectedHiddenGems = mutableStateListOf<CardItemPojo>()
+
+    fun toggleRestaurant(item: CardItemPojo, checked: Boolean) {
+        if (checked) selectedRestaurants.add(item)
+        else selectedRestaurants.remove(item)
+    }
+
+    fun togglePlace(item: CardItemPojo, checked: Boolean) {
+        if (checked) selectedPlaces.add(item)
+        else selectedPlaces.remove(item)
+    }
+
+    fun toggleHiddenGem(item: CardItemPojo, checked: Boolean) {
+        if (checked) selectedHiddenGems.add(item)
+        else selectedHiddenGems.remove(item)
     }
 
 

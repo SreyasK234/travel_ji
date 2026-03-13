@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -22,11 +23,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.travelji.model.CardItemPojo
+import com.example.travelji.viewmodel.AppViewModel
 
 @Composable
-fun FoodListView(modifier: Modifier, dataFood: List<CardItemPojo>){
-    val foodList = dataFood
-    Log.d("Food List", foodList.toString())
+fun FoodListView(modifier: Modifier, dataFood: List<CardItemPojo>, appViewModel: AppViewModel){
     val lighterPurpleGradient = Brush.verticalGradient(
         colors = listOf(
             Color(0xFF9C27B0), // Lighter Dark Purple
@@ -67,7 +67,7 @@ fun FoodListView(modifier: Modifier, dataFood: List<CardItemPojo>){
                     )
                 }
             }
-            if(foodList.isEmpty()){
+            if(dataFood.isEmpty()){
                 item {
                     Box(
                         modifier = Modifier.fillMaxSize(),
@@ -77,8 +77,9 @@ fun FoodListView(modifier: Modifier, dataFood: List<CardItemPojo>){
                     }
                 }
             }else{
-                items(foodList.size) {
-                    PlaceDetailCard("Food Row", foodList[it])
+                items(dataFood) {item ->
+                    val isChecked = appViewModel.selectedRestaurants.contains(item)
+                    PlaceDetailCard(item, isChecked, onCheckedChange = {appViewModel.toggleRestaurant(item, it)})
                 }
             }
         }

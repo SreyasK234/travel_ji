@@ -40,10 +40,10 @@ import coil.request.ImageRequest
 
 @Composable
 fun PlaceDetailCard(
-    name: String,
-    cardItemPojo: CardItemPojo
+    cardItemPojo: CardItemPojo,
+    isChecked: Boolean,
+    onCheckedChange: (Boolean) -> Unit
 ) {
-    var isChecked by rememberSaveable { mutableStateOf(false) }
 
     val url = cardItemPojo.imageUrl
     Log.d("CARD", url)
@@ -63,7 +63,7 @@ fun PlaceDetailCard(
             // Background Image
             AsyncImage(
                 model = url,
-                contentDescription = name,
+                contentDescription = null,
                 modifier = Modifier.fillMaxSize(),
                 contentScale = ContentScale.Crop
             )
@@ -117,7 +117,7 @@ fun PlaceDetailCard(
                 }
                 Checkbox(
                     checked = isChecked,
-                    onCheckedChange = { isChecked = it },
+                    onCheckedChange =  onCheckedChange ,
                     colors = CheckboxDefaults.colors(
                         checkedColor = MaterialTheme.colorScheme.primary,
                         uncheckedColor = Color.White,
