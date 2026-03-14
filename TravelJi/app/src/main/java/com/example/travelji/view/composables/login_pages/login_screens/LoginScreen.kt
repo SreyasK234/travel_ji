@@ -32,10 +32,10 @@ import androidx.navigation.NavController
 fun LoginScreenModern(
     modifier: Modifier = Modifier,
     navController: NavController,
-    authViewModel: AuthViewModel?,
+    authViewModel: AuthViewModel,
     isLoading: Boolean = false,
     emailInitial: String = "",
-    onLoginClick: (String, String) -> Unit = { _, _ -> },
+    onLoginClick: (email: String, password: String) -> Unit = { _, _ -> },
     onNavigateToSignUp: () -> Unit = {}
 ) {
     Box(

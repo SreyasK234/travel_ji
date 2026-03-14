@@ -18,20 +18,14 @@ import com.example.travelji.view.composables.login_pages.login_screens.LoginAppN
 
 class MainActivity : ComponentActivity() {
 
-    companion object{
-        var authViewModel : AuthViewModel? = null
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-
-        authViewModel = AuthViewModel()
-        val navFun : (String, String, String) -> Unit = {openingString, cityName, username ->
+        var authViewModel = AuthViewModel()
+        val navFun : (String, String) -> Unit = {openingString, cityName ->
             val intent = Intent(this@MainActivity, AppActivity::class.java)
             intent.putExtra("openingString", openingString)
             intent.putExtra("cityName", cityName)
-            intent.putExtra("username", username)
             startActivity(intent)
         }
         setContent {

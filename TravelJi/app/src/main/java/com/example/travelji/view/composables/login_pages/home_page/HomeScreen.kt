@@ -46,7 +46,7 @@ import com.example.travelji.model.HomeCardItem
 import com.example.travelji.ui.theme.TravelJiTheme
 
 @Composable
-fun HomeScreen(navFun: (String, String, String) -> Unit, str: String) {
+fun HomeScreen(navFun: (String, String) -> Unit) {
 
     var expanded by rememberSaveable { mutableStateOf(false) }
     var selectedCity by rememberSaveable { mutableStateOf("Mumbai") }
@@ -160,7 +160,7 @@ fun HomeScreen(navFun: (String, String, String) -> Unit, str: String) {
                 modifier = Modifier.fillMaxWidth()
             ) {
                 items(homeCardItems) { item ->
-                    HomeCard(item, selectedCity,navFun, str)
+                    HomeCard(item, selectedCity,navFun)
                 }
 
             }
