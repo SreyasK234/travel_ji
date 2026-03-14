@@ -6,6 +6,8 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -17,11 +19,14 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
+import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material.icons.filled.Backpack
 import androidx.compose.material.icons.filled.Explore
 import androidx.compose.material.icons.filled.Place
 import androidx.compose.material.icons.filled.Restaurant
 import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -40,6 +45,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -97,11 +103,14 @@ class AppActivity : ComponentActivity() {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainView(
-    openingPageString: SCREENS,
-    appViewModel: AppViewModel,
-    navController: NavController,
-    cityName: String
+    openingPageString: SCREENS = SCREENS.PLACES_SCREEN,
+    appViewModel: AppViewModel = AppViewModel(),
+    navController: NavController = rememberNavController(),
+    cityName: String = "Mumbai"
 ) {
+    val cities = listOf("Bangalore", "Hyderabad", "Mumbai")
+    var expanded by rememberSaveable { mutableStateOf(false) }
+    var selectedCity by rememberSaveable { mutableStateOf(cityName) }
 
     var pageString by rememberSaveable { mutableStateOf(openingPageString) }
 
@@ -110,10 +119,10 @@ fun MainView(
     val dataHiddenGems by appViewModel.dataHiddenGems.collectAsState()
 
 
-    LaunchedEffect(Unit) {
-        appViewModel.loadPlaces(cityName)
-        appViewModel.loadFoodPlaces(cityName)
-        appViewModel.loadHiddenGems(cityName)
+    LaunchedEffect(selectedCity) {
+        appViewModel.loadPlaces(selectedCity)
+        appViewModel.loadFoodPlaces(selectedCity)
+        appViewModel.loadHiddenGems(selectedCity)
     }
 
     Scaffold(
@@ -126,11 +135,42 @@ fun MainView(
                         verticalAlignment = Alignment.CenterVertically,
                         modifier = Modifier.fillMaxWidth()
                     ) {
+                        Box (){
+                            Row (verticalAlignment = Alignment.CenterVertically, modifier = Modifier.clickable {expanded = true}) {
+                                    IconButton(onClick = { expanded = true }) {
+                                    Icon(
+                                        Icons.Default.ArrowDropDown,
+                                        contentDescription = null,
+                                        tint = Color.White
+                                    )
+                                }
+                                Text(selectedCity, color = Color.White, fontSize = MaterialTheme.typography.bodySmall.fontSize)
+                            }
+
+
+
+                            DropdownMenu(
+                                expanded = expanded,
+                                onDismissRequest = { expanded = false }
+                            ) {
+                                cities.forEach { city ->
+                                    DropdownMenuItem(
+                                        text = { Text(city) },
+                                        onClick = {
+                                            selectedCity = city
+                                            expanded = false
+                                        }
+                                    )
+                                }
+                            }
+                        }
+
                         Text(
                             text = "Travel Ji",
                             style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.Bold),
                             color = Color.White
                         )
+
                         IconButton(onClick = {pageString = SCREENS.PROFILE_SCREEN}) {
                             Icon(Icons.Default.AccountCircle, null, tint = Color.Black, modifier = Modifier.size(28.dp))
                         }
@@ -224,6 +264,6 @@ fun MiddleView(
 @Composable
 fun GreetingPreview2() {
     TravelJiTheme {
-//        MainView(SCREENS.PLACES_SCREEN, data)
+        MainView()
     }
 }
