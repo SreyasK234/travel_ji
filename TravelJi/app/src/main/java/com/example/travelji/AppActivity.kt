@@ -130,56 +130,118 @@ fun MainView(
         topBar = {
             CenterAlignedTopAppBar(
                 title = {
-                    Row (
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                        verticalAlignment = Alignment.CenterVertically,
-                        modifier = Modifier.fillMaxWidth()
-                    ) {
-                        Box (){
-                            Row (verticalAlignment = Alignment.CenterVertically, modifier = Modifier.clickable {expanded = true}) {
-                                    IconButton(onClick = { expanded = true }) {
-                                    Icon(
-                                        Icons.Default.ArrowDropDown,
-                                        contentDescription = null,
-                                        tint = Color.White
-                                    )
-                                }
-                                Text(selectedCity, color = Color.White, fontSize = MaterialTheme.typography.bodySmall.fontSize)
-                            }
+                    Text(
+                        text = "Travel Ji",
+                        style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.Bold),
+                        color = Color.White
+                    )
+                },
 
+                navigationIcon = {
+                    Box {
+                        Row(verticalAlignment = Alignment.CenterVertically) {
 
+                            Text(
+                                text = selectedCity,
+                                color = Color.White,
+                                fontSize = MaterialTheme.typography.bodySmall.fontSize
+                            )
 
-                            DropdownMenu(
-                                expanded = expanded,
-                                onDismissRequest = { expanded = false }
-                            ) {
-                                cities.forEach { city ->
-                                    DropdownMenuItem(
-                                        text = { Text(city) },
-                                        onClick = {
-                                            selectedCity = city
-                                            expanded = false
-                                        }
-                                    )
-                                }
+                            IconButton(onClick = { expanded = true }) {
+                                Icon(
+                                    Icons.Default.ArrowDropDown,
+                                    contentDescription = null,
+                                    tint = Color.White
+                                )
                             }
                         }
 
-                        Text(
-                            text = "Travel Ji",
-                            style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.Bold),
-                            color = Color.White
-                        )
-
-                        IconButton(onClick = {pageString = SCREENS.PROFILE_SCREEN}) {
-                            Icon(Icons.Default.AccountCircle, null, tint = Color.Black, modifier = Modifier.size(28.dp))
+                        DropdownMenu(
+                            expanded = expanded,
+                            onDismissRequest = { expanded = false }
+                        ) {
+                            cities.forEach { city ->
+                                DropdownMenuItem(
+                                    text = { Text(city) },
+                                    onClick = {
+                                        selectedCity = city
+                                        expanded = false
+                                    }
+                                )
+                            }
                         }
                     }
                 },
+
+                actions = {
+                    IconButton(onClick = { pageString = SCREENS.PROFILE_SCREEN }) {
+                        Icon(
+                            Icons.Default.AccountCircle,
+                            contentDescription = null,
+                            tint = Color.White,
+                            modifier = Modifier.size(28.dp)
+                        )
+                    }
+                },
+
                 colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
-                    containerColor = Color(0xFF6A1B9A) // Dark Purple
+                    containerColor = Color(0xFF6A1B9A)
                 )
             )
+//            region
+//            CenterAlignedTopAppBar(
+//                title = {
+//                    Row (
+//                        horizontalArrangement = Arrangement.SpaceBetween,
+//                        verticalAlignment = Alignment.CenterVertically,
+//                        modifier = Modifier.fillMaxWidth()
+//                    ) {
+//                        Box (){
+//                            Row (verticalAlignment = Alignment.CenterVertically, modifier = Modifier.clickable {expanded = true}) {
+//                                    IconButton(onClick = { expanded = true }) {
+//                                    Icon(
+//                                        Icons.Default.ArrowDropDown,
+//                                        contentDescription = null,
+//                                        tint = Color.White
+//                                    )
+//                                }
+//                                Text(selectedCity, color = Color.White, fontSize = MaterialTheme.typography.bodySmall.fontSize)
+//                            }
+//
+//
+//
+//                            DropdownMenu(
+//                                expanded = expanded,
+//                                onDismissRequest = { expanded = false }
+//                            ) {
+//                                cities.forEach { city ->
+//                                    DropdownMenuItem(
+//                                        text = { Text(city) },
+//                                        onClick = {
+//                                            selectedCity = city
+//                                            expanded = false
+//                                        }
+//                                    )
+//                                }
+//                            }
+//                        }
+//
+//                        Text(
+//                            text = "Travel Ji",
+//                            style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.Bold),
+//                            color = Color.White
+//                        )
+//
+//                        IconButton(onClick = {pageString = SCREENS.PROFILE_SCREEN}) {
+//                            Icon(Icons.Default.AccountCircle, null, tint = Color.Black, modifier = Modifier.size(28.dp))
+//                        }
+//                    }
+//                },
+//                colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
+//                    containerColor = Color(0xFF6A1B9A) // Dark Purple
+//                )
+//            )
+//  endregion
         },
         bottomBar = {
             Box(
