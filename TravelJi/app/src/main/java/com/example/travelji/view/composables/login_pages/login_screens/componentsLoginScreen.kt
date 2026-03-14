@@ -76,9 +76,9 @@ fun AppTitle() {
 fun LoginFormModern(
     isLoading: Boolean,
     navController: NavController,
-    authViewModel: AuthViewModel,
+    authViewModel: AuthViewModel?,
     emailInitial: String,
-    onLoginClick: (email: String, password: String) -> Unit
+    onLoginClick: (String, String) -> Unit
 ) {
     var email by remember {
         mutableStateOf("")
@@ -86,11 +86,14 @@ fun LoginFormModern(
     var password by remember {
         mutableStateOf("")
     }
-    val authState = authViewModel.authState.observeAsState()
+    val authState = authViewModel?.authState?.observeAsState()
     val context = LocalContext.current
-    LaunchedEffect(authState.value) {
-        when(authState.value){
-            is AuthState.Authenticated -> navController.navigate("home")
+    LaunchedEffect(authState?.value) {
+        when(authState?.value){
+            is AuthState.Authenticated -> {
+                navController.currentBackStackEntry?.savedStateHandle?.set("username", email)
+                navController.navigate("home")
+            }
             is AuthState.Error -> Toast.makeText(context,
                 (authState.value as AuthState.Error).message, Toast.LENGTH_SHORT).show()
             else -> Unit
@@ -151,10 +154,10 @@ fun LoginFormModern(
         onClick = {
             //
 
-            authViewModel.login(email,password)
+            authViewModel?.login(email,password)
             if (!isLoading && validate()) onLoginClick(email.trim(), password)
         },
-        enabled = authState.value != AuthState.Loading,
+        enabled = authState?.value != AuthState.Loading,
         //enabled = !isLoading,
         modifier = Modifier
             .fillMaxWidth()
@@ -181,9 +184,9 @@ fun LoginFormModern(
 @Composable
 fun SignUpFormModern(
     isLoading: Boolean,
-    authViewModel: AuthViewModel,
+    authViewModel: AuthViewModel?,
     navController: NavController,
-    onSignUpClick: (email: String, password: String) -> Unit
+    onSignUpClick: (String, String) -> Unit
 ) {
     var email by remember {
         mutableStateOf("")
@@ -191,10 +194,10 @@ fun SignUpFormModern(
     var password by remember {
         mutableStateOf("")
     }
-    val authState = authViewModel.authState.observeAsState()
+    val authState = authViewModel?.authState?.observeAsState()
     val context = LocalContext.current
-    LaunchedEffect(authState.value) {
-        when (authState.value) {
+    LaunchedEffect(authState?.value) {
+        when (authState?.value) {
             is AuthState.Authenticated -> navController.navigate("home")
             is AuthState.Error -> Toast.makeText(
                 context,
@@ -277,10 +280,10 @@ fun SignUpFormModern(
         onClick = {
             //
 
-            authViewModel.signup(email, password)
+            authViewModel?.signup(email, password)
             if (!isLoading && validate()) onSignUpClick(email.trim(), password)
         },
-        enabled = authState.value != AuthState.Loading,
+        enabled = authState?.value != AuthState.Loading,
 
         modifier = Modifier
             .fillMaxWidth()

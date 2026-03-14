@@ -52,6 +52,7 @@ import com.example.travelji.ui.theme.TravelJiTheme
 import com.example.travelji.view.composables.app_pages.FoodListView
 import com.example.travelji.view.composables.app_pages.HiddenGemsListView
 import com.example.travelji.view.composables.app_pages.PlacesListView
+import com.example.travelji.view.composables.login_pages.login_screens.AuthViewModel
 import com.example.travelji.view.composables.mytrip_page.SelectedItemsScreen
 import com.example.travelji.view.composables.profile_page.SimpleProfileScreen
 import com.example.travelji.viewmodel.AppViewModel
@@ -64,6 +65,7 @@ class AppActivity : ComponentActivity() {
         val openingPage = intent.getStringExtra("openingString")
         Log.d("App Activity", openingPage?:" Nothing ")
         val cityName = intent.getStringExtra("cityName") ?: "Mumbai"
+        val username = intent.getStringExtra("username") ?: ""
 
         var openingPageString = SCREENS.PLACES_SCREEN
 
@@ -80,14 +82,14 @@ class AppActivity : ComponentActivity() {
         }
 
         val appViewModel = AppViewModel()
-        //val authViewMode = AuthViewModel()
+        val authViewMode = MainActivity.authViewModel
         setContent {
             val navController = rememberNavController()
             TravelJiTheme {
 //                var data : List<CardItemPojo> by rememberSaveable { mutableStateOf(emptyList())}
 //                var dataFood : List<CardItemPojo> by rememberSaveable { mutableStateOf(emptyList())}
 
-                MainView(openingPageString, appViewModel, navController, cityName)
+                MainView(openingPageString, appViewModel, authViewMode,navController, cityName, username)
             }
         }
     }
@@ -99,8 +101,10 @@ class AppActivity : ComponentActivity() {
 fun MainView(
     openingPageString: SCREENS,
     appViewModel: AppViewModel,
+    authViewMode: AuthViewModel?,
     navController: NavController,
-    cityName: String
+    cityName: String,
+    username: String
 ) {
 
     var pageString by rememberSaveable { mutableStateOf(openingPageString) }
@@ -180,7 +184,9 @@ fun MainView(
             }
         }
     ) { innerPadding ->
-        MiddleView(startDestination = pageString,modifier = Modifier.padding(innerPadding), data, dataFood, dataHiddenGems, navController, appViewModel)
+        MiddleView(
+            startDestination = pageString,
+            modifier = Modifier.padding(innerPadding), data, dataFood, dataHiddenGems, navController, appViewModel, username, authViewMode)
     }
 }
 
@@ -192,7 +198,9 @@ fun MiddleView(
     dataFood: List<CardItemPojo>,
     dataHiddenGems: List<CardItemPojo>,
     navController1: NavController,
-    appViewModel: AppViewModel
+    appViewModel: AppViewModel,
+    username: String,
+    authViewMode: AuthViewModel?
 ) {
 
     val navController = rememberNavController()
@@ -214,7 +222,7 @@ fun MiddleView(
             HiddenGemsListView(modifier, dataHiddenGems, appViewModel)
         }
         composable (SCREENS.PROFILE_SCREEN.screenName) {
-            SimpleProfileScreen("",navController)
+            SimpleProfileScreen(username, navController, onLogout = { authViewMode?.signout() })
         }
     }
 

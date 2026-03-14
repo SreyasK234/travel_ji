@@ -5,7 +5,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.R
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -22,7 +21,6 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -38,14 +36,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.travelji.ui.theme.TravelJiTheme
-import com.example.travelji.view.composables.login_pages.login_screens.AuthViewModel
 
 
 @Composable
 fun SimpleProfileScreen(
     name: String = "User Name",
     navController: NavController,
-    onLogout: () -> Unit = {}
+    onLogout: () -> Unit = {},
 ) {
     // Defining the purple gradient (Dark to Light)
     val purpleGradient = Brush.verticalGradient(
@@ -128,8 +125,9 @@ fun SimpleProfileScreen(
                 )
                 Spacer(Modifier.width(8.dp))
                 Button ( onClick = {
-                        navController.navigate("login")
-                        //authViewModel.signout()
+//                        navController.navigate("login")
+//                        authViewModel.signout()
+                    onLogout()
                 }){
                     Text("Log Out")
                 }
