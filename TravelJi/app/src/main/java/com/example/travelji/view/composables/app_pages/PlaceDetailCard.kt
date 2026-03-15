@@ -126,7 +126,6 @@ fun PlaceDetailCard(
                 )
             }
 
-            // Bottom Overlay (Description Column)
             Column(
                 modifier = Modifier
                     .align(Alignment.BottomStart)
