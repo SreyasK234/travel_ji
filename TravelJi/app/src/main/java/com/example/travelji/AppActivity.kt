@@ -236,7 +236,7 @@ fun MainView(
             }
         }
     ) { innerPadding ->
-        MiddleView(startDestination = pageString,modifier = Modifier.padding(innerPadding), data, dataFood, dataHiddenGems, navController, appViewModel, onLogout)
+        MiddleView(startDestination = pageString,modifier = Modifier.padding(innerPadding), data, dataFood, dataHiddenGems, navController, appViewModel, authViewModel, onLogout)
     }
 }
 
@@ -249,10 +249,12 @@ fun MiddleView(
     dataHiddenGems: List<CardItemPojo>,
     navController1: NavController,
     appViewModel: AppViewModel,
+    authViewModel: AuthViewModel,
     onLogout: () -> Unit
 ) {
 
     val navController = rememberNavController()
+    val userName = authViewModel.auth.currentUser?.email?.split("@")?.get(0) ?: "User"
 
     NavHost (
         startDestination = startDestination.screenName,
@@ -271,7 +273,7 @@ fun MiddleView(
             HiddenGemsListView(modifier, dataHiddenGems, appViewModel)
         }
         composable (SCREENS.PROFILE_SCREEN.screenName) {
-            SimpleProfileScreen("User Name",navController, onLogout)
+            SimpleProfileScreen(userName, navController, onLogout)
         }
     }
 
