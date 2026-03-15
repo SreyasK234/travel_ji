@@ -1,5 +1,6 @@
 package com.example.travelji
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
@@ -58,6 +59,7 @@ import com.example.travelji.ui.theme.TravelJiTheme
 import com.example.travelji.view.composables.app_pages.FoodListView
 import com.example.travelji.view.composables.app_pages.HiddenGemsListView
 import com.example.travelji.view.composables.app_pages.PlacesListView
+import com.example.travelji.view.composables.login_pages.login_screens.AuthViewModel
 import com.example.travelji.view.composables.mytrip_page.SelectedItemsScreen
 import com.example.travelji.view.composables.profile_page.SimpleProfileScreen
 import com.example.travelji.viewmodel.AppViewModel
@@ -86,14 +88,18 @@ class AppActivity : ComponentActivity() {
         }
 
         val appViewModel = AppViewModel()
-        //val authViewMode = AuthViewModel()
+        val authViewModel = AuthViewModel()
+
         setContent {
             val navController = rememberNavController()
             TravelJiTheme {
-//                var data : List<CardItemPojo> by rememberSaveable { mutableStateOf(emptyList())}
-//                var dataFood : List<CardItemPojo> by rememberSaveable { mutableStateOf(emptyList())}
-
-                MainView(openingPageString, appViewModel, navController, cityName)
+                MainView(openingPageString, appViewModel, authViewModel, navController, cityName, onLogout = {
+                    authViewModel.signout()
+                    val intent = Intent(this, MainActivity::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    startActivity(intent)
+                    finish()
+                })
             }
         }
     }
@@ -105,8 +111,10 @@ class AppActivity : ComponentActivity() {
 fun MainView(
     openingPageString: SCREENS = SCREENS.PLACES_SCREEN,
     appViewModel: AppViewModel = AppViewModel(),
+    authViewModel: AuthViewModel = AuthViewModel(),
     navController: NavController = rememberNavController(),
-    cityName: String = "Mumbai"
+    cityName: String = "Mumbai",
+    onLogout: () -> Unit = {}
 ) {
     val cities = listOf("Bangalore", "Hyderabad", "Mumbai")
     var expanded by rememberSaveable { mutableStateOf(false) }
@@ -188,60 +196,6 @@ fun MainView(
                     containerColor = Color(0xFF6A1B9A)
                 )
             )
-//            region
-//            CenterAlignedTopAppBar(
-//                title = {
-//                    Row (
-//                        horizontalArrangement = Arrangement.SpaceBetween,
-//                        verticalAlignment = Alignment.CenterVertically,
-//                        modifier = Modifier.fillMaxWidth()
-//                    ) {
-//                        Box (){
-//                            Row (verticalAlignment = Alignment.CenterVertically, modifier = Modifier.clickable {expanded = true}) {
-//                                    IconButton(onClick = { expanded = true }) {
-//                                    Icon(
-//                                        Icons.Default.ArrowDropDown,
-//                                        contentDescription = null,
-//                                        tint = Color.White
-//                                    )
-//                                }
-//                                Text(selectedCity, color = Color.White, fontSize = MaterialTheme.typography.bodySmall.fontSize)
-//                            }
-//
-//
-//
-//                            DropdownMenu(
-//                                expanded = expanded,
-//                                onDismissRequest = { expanded = false }
-//                            ) {
-//                                cities.forEach { city ->
-//                                    DropdownMenuItem(
-//                                        text = { Text(city) },
-//                                        onClick = {
-//                                            selectedCity = city
-//                                            expanded = false
-//                                        }
-//                                    )
-//                                }
-//                            }
-//                        }
-//
-//                        Text(
-//                            text = "Travel Ji",
-//                            style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.Bold),
-//                            color = Color.White
-//                        )
-//
-//                        IconButton(onClick = {pageString = SCREENS.PROFILE_SCREEN}) {
-//                            Icon(Icons.Default.AccountCircle, null, tint = Color.Black, modifier = Modifier.size(28.dp))
-//                        }
-//                    }
-//                },
-//                colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
-//                    containerColor = Color(0xFF6A1B9A) // Dark Purple
-//                )
-//            )
-//  endregion
         },
         bottomBar = {
             Box(
@@ -282,7 +236,7 @@ fun MainView(
             }
         }
     ) { innerPadding ->
-        MiddleView(startDestination = pageString,modifier = Modifier.padding(innerPadding), data, dataFood, dataHiddenGems, navController, appViewModel)
+        MiddleView(startDestination = pageString,modifier = Modifier.padding(innerPadding), data, dataFood, dataHiddenGems, navController, appViewModel, onLogout)
     }
 }
 
@@ -294,7 +248,8 @@ fun MiddleView(
     dataFood: List<CardItemPojo>,
     dataHiddenGems: List<CardItemPojo>,
     navController1: NavController,
-    appViewModel: AppViewModel
+    appViewModel: AppViewModel,
+    onLogout: () -> Unit
 ) {
 
     val navController = rememberNavController()
@@ -316,7 +271,7 @@ fun MiddleView(
             HiddenGemsListView(modifier, dataHiddenGems, appViewModel)
         }
         composable (SCREENS.PROFILE_SCREEN.screenName) {
-            SimpleProfileScreen("",navController)
+            SimpleProfileScreen("User Name",navController, onLogout)
         }
     }
 
