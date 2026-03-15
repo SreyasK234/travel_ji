@@ -2,6 +2,7 @@ package com.example.travelji.view.composables.app_pages
 
 import android.util.Log
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -25,6 +26,7 @@ import androidx.compose.ui.unit.sp
 import com.example.travelji.model.CardItemPojo
 import com.example.travelji.viewmodel.AppViewModel
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun HiddenGemsListView(modifier: Modifier, dataHiddenGems: List<CardItemPojo>, appViewModel: AppViewModel){
 
@@ -79,10 +81,14 @@ fun HiddenGemsListView(modifier: Modifier, dataHiddenGems: List<CardItemPojo>, a
                 }
             }else{
                 items(dataHiddenGems) {item ->
-                    val isChecked = appViewModel.selectedHiddenGems.contains(item)
+                    val isSelected = appViewModel.selectedHiddenGems.contains(item)
                     PlaceDetailCard(
-                        item, onCheckedChange = { appViewModel.toggleHiddenGem(item, it) },
-                        isChecked = isChecked
+                        cardItemPojo = item,
+                        isChecked = isSelected,
+                        onCheckedChange = { checked ->
+                            if (checked) appViewModel.selectedHiddenGems.add(item)
+                            else appViewModel.selectedHiddenGems.remove(item)
+                        }
                     )
                 }
             }

@@ -9,6 +9,8 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
+import androidx.compose.material3.TabRowDefaults
+import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -24,59 +26,73 @@ import com.example.travelji.viewmodel.AppViewModel
 
 @Composable
 fun SelectedItemsScreen(modifier: Modifier, viewModel: AppViewModel) {
-
-    var selectedTab by remember { mutableIntStateOf(0) }
-
-    val tabs = listOf(
-        "Restaurants",
-        "Places",
-        "Hidden Gems"
-    )
-
     val lighterPurpleGradient = Brush.verticalGradient(
         colors = listOf(
-            Color(0xFF9C27B0),
-            Color(0xFFCE93D8),
-            Color(0xFFF3E5F5)
+            Color(0xFF9C27B0), // Lighter Dark Purple
+            Color(0xFFCE93D8), // Lighter Medium Purple
+            Color(0xFFF3E5F5)  // Very Light Purple
         )
     )
 
-    val list = when (selectedTab) {
-        0 -> viewModel.selectedRestaurants
-        1 -> viewModel.selectedPlaces
-        else -> viewModel.selectedHiddenGems
-    }
+    var selectedTabIndex by remember { mutableIntStateOf(0) }
+    val tabs = listOf("Places", "Food", "Hidden Gems")
 
     Box(
         modifier = Modifier
             .fillMaxSize()
             .background(lighterPurpleGradient)
     ) {
-
-        Column {
-
-            TabRow(selectedTabIndex = selectedTab) {
-
+        Column(modifier = modifier.fillMaxSize()) {
+            TabRow(
+                selectedTabIndex = selectedTabIndex,
+                containerColor = Color.Transparent,
+                contentColor = Color.White,
+                indicator = { tabPositions ->
+                    TabRowDefaults.SecondaryIndicator(
+                        Modifier.tabIndicatorOffset(tabPositions[selectedTabIndex]),
+                        color = Color.White
+                    )
+                },
+                divider = {}
+            ) {
                 tabs.forEachIndexed { index, title ->
-
                     Tab(
-                        selected = selectedTab == index,
-                        onClick = { selectedTab = index },
-                        text = { Text(title) }
+                        selected = selectedTabIndex == index,
+                        onClick = { selectedTabIndex = index },
+                        text = {
+                            Text(
+                                text = title,
+                                color = if (selectedTabIndex == index) Color.White else Color.White.copy(alpha = 0.6f)
+                            )
+                        }
                     )
                 }
             }
 
+            val currentList = when (selectedTabIndex) {
+                0 -> viewModel.selectedPlaces
+                1 -> viewModel.selectedFoodPlaces
+                else -> viewModel.selectedHiddenGems
+            }
+
             LazyColumn(
-                modifier = modifier.padding(16.dp)
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(16.dp)
             ) {
-
-                items(list) { item ->
-
+                items(currentList) { item ->
                     PlaceDetailCard(
                         cardItemPojo = item,
                         isChecked = true,
-                        onCheckedChange = { },
+                        onCheckedChange = { isChecked ->
+                            if (!isChecked) {
+                                when (selectedTabIndex) {
+                                    0 -> viewModel.selectedPlaces.remove(item)
+                                    1 -> viewModel.selectedFoodPlaces.remove(item)
+                                    2 -> viewModel.selectedHiddenGems.remove(item)
+                                }
+                            }
+                        }
                     )
                 }
             }

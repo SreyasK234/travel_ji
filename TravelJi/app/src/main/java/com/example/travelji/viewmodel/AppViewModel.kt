@@ -21,6 +21,10 @@ class AppViewModel : ViewModel() {
     private val _dataHiddenGems = MutableStateFlow<List<CardItemPojo>>(emptyList())
     val dataHiddenGems : StateFlow<List<CardItemPojo>> = _dataHiddenGems
 
+    val selectedPlaces = mutableStateListOf<CardItemPojo>()
+    val selectedFoodPlaces = mutableStateListOf<CardItemPojo>()
+    val selectedHiddenGems = mutableStateListOf<CardItemPojo>()
+
     fun loadPlaces(cityName: String) {
         viewModelScope.launch {
             _dataPlaces.value = appRepo.getPlaces(cityName)
@@ -38,25 +42,5 @@ class AppViewModel : ViewModel() {
             _dataHiddenGems.value = appRepo.getHiddenGems(cityName)
         }
     }
-
-    val selectedRestaurants = mutableStateListOf<CardItemPojo>()
-    val selectedPlaces = mutableStateListOf<CardItemPojo>()
-    val selectedHiddenGems = mutableStateListOf<CardItemPojo>()
-
-    fun toggleRestaurant(item: CardItemPojo, checked: Boolean) {
-        if (checked) selectedRestaurants.add(item)
-        else selectedRestaurants.remove(item)
-    }
-
-    fun togglePlace(item: CardItemPojo, checked: Boolean) {
-        if (checked) selectedPlaces.add(item)
-        else selectedPlaces.remove(item)
-    }
-
-    fun toggleHiddenGem(item: CardItemPojo, checked: Boolean) {
-        if (checked) selectedHiddenGems.add(item)
-        else selectedHiddenGems.remove(item)
-    }
-
 
 }

@@ -2,6 +2,7 @@ package com.example.travelji.view.composables.app_pages
 
 import android.util.Log
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -25,6 +26,7 @@ import androidx.compose.ui.unit.sp
 import com.example.travelji.model.CardItemPojo
 import com.example.travelji.viewmodel.AppViewModel
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun FoodListView(modifier: Modifier, dataFood: List<CardItemPojo>, appViewModel: AppViewModel){
     val lighterPurpleGradient = Brush.verticalGradient(
@@ -78,8 +80,15 @@ fun FoodListView(modifier: Modifier, dataFood: List<CardItemPojo>, appViewModel:
                 }
             }else{
                 items(dataFood) {item ->
-                    val isChecked = appViewModel.selectedRestaurants.contains(item)
-                    PlaceDetailCard(item, isChecked, onCheckedChange = {appViewModel.toggleRestaurant(item, it)})
+                    val isSelected = appViewModel.selectedFoodPlaces.contains(item)
+                    PlaceDetailCard(
+                        cardItemPojo = item,
+                        isChecked = isSelected,
+                        onCheckedChange = { checked ->
+                            if (checked) appViewModel.selectedFoodPlaces.add(item)
+                            else appViewModel.selectedFoodPlaces.remove(item)
+                        }
+                    )
                 }
             }
         }
