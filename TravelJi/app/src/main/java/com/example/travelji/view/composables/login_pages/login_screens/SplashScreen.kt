@@ -90,9 +90,8 @@ fun SplashScreen(onTimeout: () -> Unit) {
 
                 Spacer(Modifier.height(32.dp))
 
-                // App Name with Indigo colors to match login theme
                 Text(
-                    text = "Travel Guide",
+                    text = "Travel Ji",
                     style = MaterialTheme.typography.displayMedium.copy(
                         fontWeight = FontWeight.Black,
                         color = PrimaryIndigo,
@@ -104,7 +103,6 @@ fun SplashScreen(onTimeout: () -> Unit) {
 
                 Spacer(Modifier.height(12.dp))
 
-                // Tagline with secondary indigo
                 Text(
                     text = "Explore. Plan. Experience.",
                     style = MaterialTheme.typography.titleMedium.copy(
@@ -116,8 +114,6 @@ fun SplashScreen(onTimeout: () -> Unit) {
                 )
 
                 Spacer(modifier = Modifier.weight(0.6f))
-
-                // Subtle indicator at the bottom
                 Box(
                     modifier = Modifier
                         .width(40.dp)

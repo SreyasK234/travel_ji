@@ -57,7 +57,7 @@ import com.example.travelji.viewmodel.AuthViewModel
 fun AppTitle() {
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
         Text(
-            text = "Travel Guide",
+            text = "Travel Ji",
             style = MaterialTheme.typography.headlineLarge.copy(
                 fontWeight = FontWeight.ExtraBold,
                 letterSpacing = (-0.5).sp,
