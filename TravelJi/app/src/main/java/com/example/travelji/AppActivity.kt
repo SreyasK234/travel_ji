@@ -7,8 +7,6 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -46,7 +44,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -59,7 +56,7 @@ import com.example.travelji.ui.theme.TravelJiTheme
 import com.example.travelji.view.composables.app_pages.FoodListView
 import com.example.travelji.view.composables.app_pages.HiddenGemsListView
 import com.example.travelji.view.composables.app_pages.PlacesListView
-import com.example.travelji.view.composables.login_pages.login_screens.AuthViewModel
+import com.example.travelji.viewmodel.AuthViewModel
 import com.example.travelji.view.composables.mytrip_page.SelectedItemsScreen
 import com.example.travelji.view.composables.profile_page.SimpleProfileScreen
 import com.example.travelji.viewmodel.AppViewModel

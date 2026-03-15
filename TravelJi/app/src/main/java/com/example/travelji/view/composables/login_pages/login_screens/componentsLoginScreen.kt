@@ -49,6 +49,8 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.example.travelji.viewmodel.AuthState
+import com.example.travelji.viewmodel.AuthViewModel
 
 
 @Composable

@@ -13,7 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.travelji.ui.theme.TravelJiTheme
-import com.example.travelji.view.composables.login_pages.login_screens.AuthViewModel
+import com.example.travelji.viewmodel.AuthViewModel
 import com.example.travelji.view.composables.login_pages.login_screens.LoginAppNavigation
 
 class MainActivity : ComponentActivity() {

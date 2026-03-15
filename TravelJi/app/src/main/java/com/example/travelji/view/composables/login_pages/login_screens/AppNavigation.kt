@@ -6,6 +6,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.travelji.view.composables.login_pages.home_page.HomeScreen
+import com.example.travelji.viewmodel.AuthViewModel
 
 @Composable
 fun LoginAppNavigation(modifier: Modifier, authViewModel: AuthViewModel, navFun: (String, String) -> Unit){

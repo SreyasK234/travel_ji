@@ -1,4 +1,4 @@
-package com.example.travelji.view.composables.login_pages.login_screens
+package com.example.travelji.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
