@@ -4,5 +4,6 @@ data class CardItemPojo(
     var description: String = "",
     var imageUrl: String = "",
     var name: String = "",
-    var rating: Double = 0.0
+    var rating: Double = 0.0,
+    var geoString : String? = null
 )

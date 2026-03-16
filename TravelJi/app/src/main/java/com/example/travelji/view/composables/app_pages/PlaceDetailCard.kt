@@ -1,5 +1,7 @@
 package com.example.travelji.view.composables.app_pages
 
+import android.content.Intent
+import android.net.Uri
 import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -11,19 +13,18 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CheckboxDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -36,7 +37,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.travelji.model.CardItemPojo
 import coil.compose.AsyncImage
-import coil.request.ImageRequest
 
 @Composable
 fun PlaceDetailCard(
@@ -81,7 +81,6 @@ fun PlaceDetailCard(
                         color = Color.Black.copy(alpha = 0.6f),
                         shape = RoundedCornerShape(8.dp)
                     ) {
-
                         Text(
                             text = cardItemPojo.name,
                             color = Color.White,
@@ -89,17 +88,14 @@ fun PlaceDetailCard(
                                 horizontal = 12.dp,
                                 vertical = 6.dp
                             ),
-//                        style = MaterialTheme.typography.titleMedium,
                             fontWeight = FontWeight.Bold
                         )
-
                     }
 
                     Surface(
                         color = Color.Black.copy(alpha = 0.6f),
                         shape = RoundedCornerShape(8.dp)
                     ) {
-
                         Text(
                             text = "Rating: ${cardItemPojo.rating}",
                             fontSize = 11.sp,
@@ -108,12 +104,9 @@ fun PlaceDetailCard(
                                 horizontal = 12.dp,
                                 vertical = 6.dp
                             ),
-//                        style = MaterialTheme.typography.titleMedium,
                             fontWeight = FontWeight.Bold
                         )
-
                     }
-
                 }
                 Checkbox(
                     checked = isChecked,
@@ -126,7 +119,8 @@ fun PlaceDetailCard(
                 )
             }
 
-            Column(
+            // Bottom Overlay (Description and Location Button)
+            Row(
                 modifier = Modifier
                     .align(Alignment.BottomStart)
                     .fillMaxWidth()
@@ -138,21 +132,42 @@ fun PlaceDetailCard(
                             )
                         )
                     )
-                    .padding(16.dp)
+                    .padding(16.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                Text(
-                    text = "Description",
-                    color = Color.White,
-                    style = MaterialTheme.typography.labelLarge,
-                    fontWeight = FontWeight.Bold
-                )
-                Text(
-                    text = cardItemPojo.description,
-                    color = Color.LightGray,
-//                    style = MaterialTheme.typography.bodyMedium,
-                    maxLines = 3,
-                    overflow = TextOverflow.Ellipsis
-                )
+                Column(modifier = Modifier.weight(1f)) {
+                    Text(
+                        text = "Description",
+                        color = Color.White,
+                        style = MaterialTheme.typography.labelLarge,
+                        fontWeight = FontWeight.Bold
+                    )
+                    Text(
+                        text = cardItemPojo.description,
+                        color = Color.LightGray,
+                        maxLines = 3,
+                        overflow = TextOverflow.Ellipsis
+                    )
+                }
+
+                val context = LocalContext.current
+
+                IconButton(
+                    onClick = {
+                        if(cardItemPojo.geoString != null){
+                            val uri = Uri.parse(cardItemPojo.geoString)
+                            val intent = Intent(Intent.ACTION_VIEW, uri)
+                            context.startActivity(intent)
+                        }
+                    }
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.LocationOn,
+                        contentDescription = "Location",
+                        tint = Color.White
+                    )
+                }
             }
         }
     }
