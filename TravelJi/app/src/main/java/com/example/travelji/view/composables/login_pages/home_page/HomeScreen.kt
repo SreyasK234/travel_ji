@@ -17,6 +17,7 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ExitToApp
 import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material.icons.filled.ArrowDropUp
 import androidx.compose.material.icons.filled.Backpack
@@ -42,11 +43,17 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import com.example.travelji.model.HomeCardItem
 import com.example.travelji.ui.theme.TravelJiTheme
+import com.example.travelji.viewmodel.AuthViewModel
 
 @Composable
-fun HomeScreen(navFun: (String, String) -> Unit) {
+fun HomeScreen(
+    navFun: (String, String) -> Unit,
+    authViewModel: AuthViewModel,
+    navController: NavHostController
+) {
 
     var expanded by rememberSaveable { mutableStateOf(false) }
     var selectedCity by rememberSaveable { mutableStateOf("Mumbai") }
@@ -57,10 +64,10 @@ fun HomeScreen(navFun: (String, String) -> Unit) {
         HomeCardItem("Recommended Restaurants", Icons.Default.Restaurant),
         HomeCardItem("Hidden Gems", Icons.Default.Explore),
         HomeCardItem("My Trip", Icons.Default.Backpack),
-        HomeCardItem("Profile", Icons.Default.Person)
+        HomeCardItem("Profile", Icons.Default.Person),
+        HomeCardItem("Log Out", Icons.AutoMirrored.Filled.ExitToApp)
     )
 
-    // Define the purple gradient
     val purpleGradient = Brush.verticalGradient(
         colors = listOf(
             Color(0xFF6A1B9A), // Dark Purple
@@ -160,7 +167,7 @@ fun HomeScreen(navFun: (String, String) -> Unit) {
                 modifier = Modifier.fillMaxWidth()
             ) {
                 items(homeCardItems) { item ->
-                    HomeCard(item, selectedCity,navFun)
+                    HomeCard(item, selectedCity,navFun, authViewModel, navController)
                 }
 
             }

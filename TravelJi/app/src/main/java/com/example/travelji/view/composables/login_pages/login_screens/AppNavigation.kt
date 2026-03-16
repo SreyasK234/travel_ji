@@ -32,7 +32,7 @@ fun LoginAppNavigation(modifier: Modifier, authViewModel: AuthViewModel, navFun:
             )
         }
         composable("home") {
-            HomeScreen(navFun)
+            HomeScreen(navFun, authViewModel, navController)
 
 
         }

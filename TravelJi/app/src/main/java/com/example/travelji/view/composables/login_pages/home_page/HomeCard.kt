@@ -23,15 +23,28 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import com.example.travelji.model.HomeCardItem
+import com.example.travelji.viewmodel.AuthViewModel
 
 @Composable
-fun HomeCard(item: HomeCardItem, selectedCity: String, navFun: (String, String) -> Unit) {
+fun HomeCard(
+    item: HomeCardItem,
+    selectedCity: String,
+    navFun: (String, String) -> Unit,
+    authViewModel: AuthViewModel,
+    navController: NavHostController
+) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .aspectRatio(1f)
             .clickable {
+                if(item.title == "Log Out"){
+                    authViewModel.signout()
+                    navController.navigate("splash")
+                    return@clickable
+                }
                 navFun(item.title,selectedCity)
             },
 //        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
