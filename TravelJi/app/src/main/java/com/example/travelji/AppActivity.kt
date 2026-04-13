@@ -206,7 +206,7 @@ fun MainView(
                     modifier = Modifier
                         .fillMaxWidth(0.92f)
                         .height(72.dp),
-                    shape = RoundedCornerShape(36.dp),
+                    shape = RoundedCornerShape(30.dp),
                     color = Color.Black.copy(alpha = 0.15f), // Glassy background
                     border = BorderStroke(1.dp, Color.Black.copy(alpha = 0.3f)),
                     tonalElevation = 0.dp
